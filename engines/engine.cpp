@@ -854,6 +854,7 @@ bool Engine::canSaveGameStateCurrently() {
 }
 
 bool Engine::loadGameDialog() {
+#if USE_LAUNCHER // Robin
 	if (!canLoadGameStateCurrently()) {
 		g_system->displayMessageOnOSD(_("Loading game is currently unavailable"));
 		return false;
@@ -880,9 +881,15 @@ bool Engine::loadGameDialog() {
 	}
 
 	return true;
+	#else
+
+	g_system->displayMessageOnOSD(_("Loading game is currently unimplemented because USE_LAUNCHER was disabled"));
+	return false;
+	#endif
 }
 
 bool Engine::saveGameDialog() {
+	#if USE_LAUNCHER // Robin
 	if (!canSaveGameStateCurrently()) {
 		g_system->displayMessageOnOSD(_("Saving game is currently unavailable"));
 		return false;
@@ -910,8 +917,11 @@ bool Engine::saveGameDialog() {
 		errorDialog.runModal();
 		return false;
 	}
-
 	return true;
+	#else
+	g_system->displayMessageOnOSD(_("Saving game is currently unimplemented because USE_LAUNCHER was disabled"));
+	return false;
+	#endif
 }
 
 void Engine::quitGame() {

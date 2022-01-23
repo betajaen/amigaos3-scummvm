@@ -8,20 +8,15 @@ MODULE_OBJS := \
 	dialog.o \
 	error.o \
 	EventRecorder.o \
-	filebrowser-dialog.o \
 	gui-manager.o \
 	massadd.o \
 	message.o \
 	object.o \
-	predictivedialog.o \
-	saveload.o \
-	saveload-dialog.o \
 	ThemeEngine.o \
 	ThemeEval.o \
 	ThemeLayout.o \
 	ThemeParser.o \
 	Tooltip.o \
-	unknown-game-dialog.o \
 	animation/Animation.o \
 	animation/RepeatAnimationWrapper.o \
 	animation/SequenceAnimationComposite.o \
@@ -65,7 +60,12 @@ MODULE_OBJS += \
 	options.o \
 	editgamedialog.o \
 	themebrowser.o \
-	browser.o
+	browser.o \
+	predictivedialog.o \
+	saveload-dialog.o \
+	filebrowser-dialog.o \
+	unknown-game-dialog.o \
+	saveload.o
 endif
 
 # Include common rules
