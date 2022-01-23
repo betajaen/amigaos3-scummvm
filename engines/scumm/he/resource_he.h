@@ -68,6 +68,7 @@ private:
 	CachedCursor _cursorCache[MAX_CACHED_CURSORS];
 };
 
+#if USE_WINEXE
 class Win32ResExtractor : public ResExtractor {
 public:
 	Win32ResExtractor(ScummEngine_v70he *scumm);
@@ -75,9 +76,9 @@ public:
 
 private:
 	Common::PEResources *_exe;
-
 	bool extractResource(int id, CachedCursor *cc) override;
 };
+#endif
 
 class MacResExtractor : public ResExtractor {
 public:
@@ -89,6 +90,17 @@ private:
 
 	bool extractResource(int id, CachedCursor *cc) override;
 };
+
+#ifndef USE_WINEXE // Robin
+class NullResExtractor : public ResExtractor {
+public:
+	NullResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {}
+	~NullResExtractor() override {}
+
+private:
+	bool extractResource(int id, CachedCursor *cc) override { return false; }
+};
+#endif
 
 } // End of namespace Scumm
 

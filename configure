@@ -234,6 +234,7 @@ _windres=windres
 _ldd=ldd
 _stagingpath="staging"
 _amigaospath="install"
+_amigaos3path="amigaos3"
 _morphospath="PROGDIR:"
 _staticlibpath=
 _xcodetoolspath=
@@ -263,6 +264,19 @@ _has_posix_spawn=no
 _endian=unknown
 _need_memalign=yes
 _have_x86=no
+# AmigaOS3 features
+_amigaos3_arch="aga"
+_amigaos3_processor="030"
+_amigaos3_user_machine_flags=""
+_amigaos3_user_define=""
+_amigaos3_processor_flags=""
+_amigaos3_arch_define=""
+# AmigaOS3 ScummVM feature reduction for smaller sizes
+_amigaos3_use_winexe=no		# Enable support for Windows executable reading, disables winfonts and cursors.
+_amigaos3_use_json=no		# Enable support for JSON files
+_amigaos3_use_unarg=no		# Enable support for ARJ files decompression
+_amigaos3_use_wma=no		# Enable support for WMA
+_amigaos3_use_xml=yes		# Enable support for XML
 
 # Add (virtual) features
 add_feature 16bit "16bit color" "_16bit"
@@ -442,6 +456,24 @@ define_in_config_if_no() {
 	else
 		add_line_to_config_h "#undef $2"
 		add_line_to_config_mk "# $2 = 1"
+	fi
+}
+# Conditionally add definitions to config.h and config.mk and also prints info. Takes three parameters:
+# The first one can be set to 'yes' or 'no'. If 'yes' is used, then
+# the line "#define $2" is added to config.h and "$2 = 1" to config.mk.
+# Otherwise "#undef $2" is added to config.h and "# $2 = 1" to config.mk
+# $3 is the name of the feature
+define_in_config_if_yes_and_print() {
+	echo_n "Checking for "
+	echo_n "$3... "
+	if test "$1" = yes ; then
+		add_line_to_config_h "#define $2"
+		add_line_to_config_mk "$2 = 1"
+		echo "yes"
+	else
+		add_line_to_config_h "#undef $2"
+		add_line_to_config_mk "# $2 = 1"
+		echo "no"
 	fi
 }
 
@@ -817,6 +849,7 @@ Special configuration feature:
                                            android-x86 for Android x86
                                            android-x86_64 for Android x86_64
                                            androidsdl for Android with SDL backend
+                                           amigaos3 for the Commodore Amiga (AmigaOS 3.0-3.9)
                                            caanoo for Caanoo
                                            dingux for Dingux
                                            raspberrypi for Raspberry Pi
@@ -840,6 +873,13 @@ Special configuration feature:
                                            samsungtv for Samsung TV
                                            switch for Nintendo Switch
                                            wii for Nintendo Wii
+
+  --amigaos3-processor=OPTION              AmigaOS3 Processor
+                                              030, 040, 060
+  --amigaos3-arch=OPTION                   AmigaOS3 Architecture
+                                              aga, rtg
+  --amigaos3-machine-flags=OPTION          AmigaOS3 extra machine flags
+  --amigaos3-define=OPTION                 AmigaOS3 extra define
 
 Game engines:
   --enable-all-engines     enable all engines, including those which are
@@ -1490,6 +1530,18 @@ for ac_option in $@; do
 			engine_disable ${engine_name}
 		done
 		;;
+	--amigaos3-arch=*)
+		_amigaos3_arch=`echo $ac_option | cut -d '=' -f 2`
+		;;
+	--amigaos3-processor=*)
+		_amigaos3_processor=`echo $ac_option | cut -d '=' -f 2`
+		;;
+	--amigaos3-machine-flags=*)
+		_amigaos3_user_machine_flags=`echo $ac_option | cut -d '=' -f 2`
+		;;
+	--amigaos3-define=*)
+		_amigaos3_user_define=`echo $ac_option | cut -d '=' -f 2`
+		;;
 	*)
 		option_error
 		;;
@@ -1511,6 +1563,54 @@ case $_host in
 	datarootdir='${prefix}'
 	datadir='${datarootdir}'
 	docdir='${prefix}/doc'
+	;;
+amigaos3)
+	_host_os=amigaos3
+	
+	echo_n "Checking Amiga processor... "
+	case $_amigaos3_processor in
+		"030")
+			_host_cpu=m68k
+			_host_alias=m68k-amigaos
+			_amigaos3_processor_flags="-m68030 -mtune=68030"
+			echo "68030"
+		;;
+		"040")
+			_host_cpu=m68k
+			_host_alias=m68k-amigaos
+			_amigaos3_processor_flags="-m68040 -mtune=68040"
+			echo "68040"
+		;;
+		"060")
+			_host_cpu=m68k
+			_host_alias=m68k-amigaos
+			_amigaos3_processor_flags="-m68060 -mtune=68060"
+			echo "68060"
+		;;
+		*)
+			echo "unknown!"
+			echo "  Please set --amigaos3-processor to 030, 040 or 060"
+			exit 1
+		;;
+	esac
+
+	
+	echo_n "Checking Amiga architecture... "
+	case $_amigaos3_arch in
+		"aga")
+			_amigaos3_arch_define="AMIGAOS3_AGA"
+			echo "aga"
+		;;
+		"rtg")
+			_amigaos3_arch_define="AMIGAOS3_RTG"
+			echo "rtg"
+		;;
+		*)
+			echo "unknown!"
+			echo "  Please set --amigaos3-arch to aga or rtg"
+			exit 1
+		;;
+	esac
 	;;
 android-arm-v7a | ouya)
 	_host_os=android
@@ -2620,6 +2720,9 @@ case $_host_os in
 		append_var LDFLAGS "-specs=3dsx.specs -lctru"
 		append_var LIBS "-lcitro3d"
 		;;
+	amigaos3)
+		add_line_to_config_mk 'AMIGAOS3 = 1'
+		;;
 	amigaos*)
 		# On building dynamic, everything (possible) should be built as plugin.
 		if test "$_dynamic_modules" = yes ; then
@@ -3173,6 +3276,144 @@ if test -n "$_host"; then
 			_vorbis=no
 			_port_mk="backends/platform/3ds/3ds.mk"
 			;;
+		amigaos3)
+		
+			_backend="amigaos3"
+			_port_mk="backends/platform/amigaos3/amigaos3.mk"
+
+			# Machine Flags
+
+			_machine_flags="-noixemul -fno-threadsafe-statics -fshort-enums -fstack-reuse=all"
+			append_var _machine_flags $_amigaos3_processor_flags
+			
+			if test -n "$_amigaos3_user_define"; then
+				append_var _machine_flags $_amigaos3_user_machine_flags
+			fi
+			
+			if test "$_enable_lto" != no; then
+				append_var _machine_flags "-flto"
+			fi
+
+			# Defines
+
+			append_var DEFINES "-D__amigaos3__"
+			append_var DEFINES "-D__N64__"
+			append_var DEFINES "-DLIMIT_FPS"
+			append_var DEFINES "-DREDUCE_MEMORY_USAGE"
+
+			# Feature reduction
+			append_var DEFINES "-DDISABLE_COMMAND_LINE"
+			append_var DEFINES "-DDISABLE_DEFAULT_SAVEFILEMANAGER"
+			append_var DEFINES "-DDISABLE_DOSBOX_OPL"
+			append_var DEFINES "-DDISABLE_FANCY_THEMES"
+			append_var DEFINES "-DDISABLE_NES_APU"
+			append_var DEFINES "-DDISABLE_SID"
+			append_var DEFINES "-DDISABLE_DEFAULT_EVENT_MANAGER"
+			append_var DEFINES "-DDISABLE_DEFAULT_AUDIOCD_MANAGER"
+			append_var DEFINES "-DDISABLE_TEXT_CONSOLE"
+			append_var DEFINES "-DDISABLE_MD5"
+			append_var DEFINES "-DDISABLE_SAVELOADCHOOSER_GRID"
+			append_var DEFINES "-DDISABLE_STDIO_FILESTREAM"
+			append_var DEFINES "-DDISABLE_PSP_MP3"
+			append_var DEFINES "-DDISABLE_HELP"
+
+			append_var DEFINES "-DREGPARM=__attribute__\(\(regparm\(3\)\)\)"
+			# append_var DEFINES "-DFORBIDDEN_SYMBOL_ALLOW_ALL -DSTDCALL=__stdargs -DHAVE_CONFIG_H"
+
+			if test -n "$_amigaos3_user_define"; then
+				DEFINES="$DEFINES -D$_amigaos3_user_define"
+			fi
+
+			DEFINES="$DEFINES -D$_amigaos3_arch_define"
+
+			# Compiler Configuration
+
+			append_var CXXFLAGS "$_machine_flags"
+			append_var LDFLAGS  "$_machine_flags"
+			append_var CXXFLAGS "-fno-exceptions"
+
+			if test "$_debug_build" != yes; then
+				# no logging, warning etc...
+				append_var DEFINES "-DDISABLE_TEXT_CONSOLE"
+				append_var CXXFLAGS "-fstrict-aliasing"
+				# in release mode without profiling, disable frame pointer
+				if test "$_enable_prof" != yes; then
+					append_var CXXFLAGS "-fomit-frame-pointer"
+				fi
+			fi
+
+			# in general, profiling requires frame pointer
+			if test "$_enable_prof" = yes; then
+				append_var CXXFLAGS "-fno-omit-frame-pointer"
+			fi
+			
+			# Use -O3 on the Amiga for optimized builds.
+			if test "$_optimizations" = yes; then
+				_optimization_level="-Os" # "-Ofast"
+			else
+				append_var CXXFLAGS "-Og"
+			fi
+
+			# Disable incompatible or inappropriate ScummVM features
+
+			_seq_midi=no
+			_timidity=no
+			_mt32emu=no
+			_alsa=no
+			_bink=no
+			_updates=no
+			_lua=no
+			_nuked_opl=no
+			_build_scalers=no
+			_build_hq_scalers=no
+			_build_edge_scalers=no
+			_build_aspect=no
+			_savegame_timestamp=no	# Not every Amiga has a RTC
+			_ogg=no
+			_vorbis=no
+			_sdlnet=no
+			_libcurl=no
+			_curl=no
+			_flac=no
+			_alsa=no
+			_sparkle=no
+			_a52=no
+			_jpeg=no
+			_png=no
+			_gif=no
+			_theoradec=no
+			_faad=no
+			_fluidsynth=no
+			_fluidlite=no
+			_tinygl=no
+			_freetype2=no
+			_bink=no
+			
+
+			# Experimental
+			_translation=no
+			_detectlang=no
+
+			# Enable High resolution for RTG and disable for AGA
+			case $_amigaos3_arch in
+				"aga")
+					_highres=no
+					_16bit=no
+				;;
+				"rtg")
+					_highres=no
+					_16bit=no
+				;;
+			esac
+			
+			# Leave out resources by default, save binary size.
+			_builtin_resources=no
+
+			# No detection. This is done manually via the installer
+			_detection_features_static=no
+			_detection_features_full=no
+
+			;;
 		android-arm-v7a | android-arm64-v8a | android-x86 | android-x86_64 | ouya)
 			# also __ANDROID__ is defined by Clang in the NDK
 			DEFINES="$DEFINES -D__ANDROID_PLAIN_PORT__ -DANDROID_PLAIN_PORT"
@@ -3634,6 +3875,15 @@ fi
 #
 case $_backend in
 	3ds)
+		;;
+	amigaos3)
+	
+			define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
+			define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
+			define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "WinEXE, WinCursor and WinFont"
+			define_in_config_if_yes_and_print "$_amigaos3_use_unarg" "USE_UNARJ" "UnARJ"
+			define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
+
 		;;
 	android | android3d)
 		append_var DEFINES "-DREDUCE_MEMORY_USAGE"
@@ -5845,6 +6095,9 @@ if test "$_dialogs" = "no"; then
 	echo "no"
 else
 	case $_host_os in
+	amigaos3)
+		_dialogs=no
+		;;
 	amigaos* | morphos*)
 		echo "asl"
 		_dialogs=yes
@@ -6269,6 +6522,7 @@ LDD := $_ldd
 WINDRESFLAGS := $WINDRESFLAGS
 STAGINGPATH=$_stagingpath
 AMIGAOSPATH=$_amigaospath
+AMIGAOS3PATH=$_amigaos3path
 MORPHOSPATH=$_morphospath
 STATICLIBPATH=$_staticlibpath
 XCODETOOLSPATH=$_xcodetoolspath

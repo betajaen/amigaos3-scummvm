@@ -12,7 +12,6 @@ MODULE_OBJS := \
 	fonts/newfont_big.o \
 	fonts/newfont.o \
 	fonts/ttf.o \
-	fonts/winfont.o \
 	korfont.o \
 	larryScale.o \
 	maccursor.o \
@@ -44,7 +43,6 @@ MODULE_OBJS := \
 	thumbnail.o \
 	VectorRenderer.o \
 	VectorRendererSpec.o \
-	wincursor.o \
 	yuv_to_rgb.o \
 	pixelbuffer.o \
 	opengl/context.o \
@@ -124,6 +122,12 @@ MODULE_OBJS += \
 	scaler/edge.o
 endif
 
+endif
+
+ifdef USE_WINEXE
+MODULE_OBJS += \
+	wincursor.o \
+	fonts/winfont.o
 endif
 
 # Include common rules

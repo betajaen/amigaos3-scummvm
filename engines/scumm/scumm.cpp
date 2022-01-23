@@ -890,7 +890,11 @@ ScummEngine_v70he::ScummEngine_v70he(OSystem *syst, const DetectorResult &dr)
 	if (_game.platform == Common::kPlatformMacintosh && (_game.heversion >= 72 && _game.heversion <= 74))
 		_resExtractor = new MacResExtractor(this);
 	else
+#if USE_WINEXE // Robin
 		_resExtractor = new Win32ResExtractor(this);
+#else
+		_resExtractor = new NullResExtractor(this);
+#endif
 
 	_heV7DiskOffsets = NULL;
 	_heV7RoomOffsets = NULL;

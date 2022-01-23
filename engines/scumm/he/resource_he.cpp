@@ -113,6 +113,7 @@ void ResExtractor::setCursor(int id) {
 	_vm->setCursorFromBuffer(cc->bitmap, cc->width, cc->height, cc->width);
 }
 
+#if USE_WINEXE // Robin
 
 Win32ResExtractor::Win32ResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {
 	_exe = new Common::PEResources();
@@ -123,6 +124,7 @@ Win32ResExtractor::~Win32ResExtractor() {
 }
 
 bool Win32ResExtractor::extractResource(int id, CachedCursor *cc) {
+
 	if (_fileName.empty()) { // We are running for the first time
 		_fileName = _vm->generateFilename(-3);
 
@@ -158,6 +160,8 @@ bool Win32ResExtractor::extractResource(int id, CachedCursor *cc) {
 	delete group;
 	return true;
 }
+
+#endif // Robin
 
 MacResExtractor::MacResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {
 	_resMgr = NULL;

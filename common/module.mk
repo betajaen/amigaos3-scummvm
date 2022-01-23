@@ -18,7 +18,6 @@ MODULE_OBJS := \
 	ini-file.o \
 	installshield_cab.o \
 	installshieldv3_archive.o \
-	json.o \
 	language.o \
 	localization.o \
 	macresman.o \
@@ -40,7 +39,6 @@ MODULE_OBJS := \
 	streamdebug.o \
 	str-enc.o \
 	encodings/singlebyte.o \
-	stuffit.o \
 	system.o \
 	textconsole.o \
 	text-to-speech.o \
@@ -51,10 +49,6 @@ MODULE_OBJS := \
 	unzip.o \
 	ustr.o \
 	util.o \
-	winexe.o \
-	winexe_ne.o \
-	winexe_pe.o \
-	xmlparser.o \
 	zlib.o
 
 MODULE_OBJS += \
@@ -110,5 +104,34 @@ MODULE_OBJS += \
 	lua/scummvm_file.o
 endif
 
+# Robin Begin
+ifdef USE_JSON
+	MODULE_OBJS += json.o
+endif
+ifdef USE_XML
+	MODULE_OBJS += xmlparser.o
+endif
+ifdef USE_WINEXE
+	MODULES_OBJS += \
+		winexe.o \
+		winexe_ne.o \
+		winexe_pe.o
+endif
+ifdef USE_STUFFIT
+	MODULES_OBJS += stuffit.o
+endif
+ifdef USE_UNARJ
+	MODULES_OBJS += unarj.o
+endif
+ifdef USE_ACHIEVEMENTS
+	MODULES_OBJS += achivements.o
+endif
+ifdef USE_WMA
+	MODULES_OBJS += sinewindows.o
+endif
+
+# Robin End
+
 # Include common rules
 include $(srcdir)/rules.mk
+

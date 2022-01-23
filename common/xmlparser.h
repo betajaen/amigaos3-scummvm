@@ -20,6 +20,8 @@
  *
  */
 
+#ifndef DISABLE_COMMON_XML // Robin
+
 #ifndef XML_PARSER_H
 #define XML_PARSER_H
 
@@ -363,3 +365,5 @@ private:
 } // End of namespace Common
 
 #endif
+
+#endif // Robin
