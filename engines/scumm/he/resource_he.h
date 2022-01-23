@@ -80,6 +80,7 @@ private:
 };
 #endif
 
+#if USE_MACEXE
 class MacResExtractor : public ResExtractor {
 public:
 	MacResExtractor(ScummEngine_v70he *scumm);
@@ -90,8 +91,9 @@ private:
 
 	bool extractResource(int id, CachedCursor *cc) override;
 };
+#endif
 
-#ifndef USE_WINEXE // Robin
+#if !defined(USE_WINEXE) || !defined(USE_MACEXE)
 class NullResExtractor : public ResExtractor {
 public:
 	NullResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {}
@@ -101,7 +103,6 @@ private:
 	bool extractResource(int id, CachedCursor *cc) override { return false; }
 };
 #endif
-
 } // End of namespace Scumm
 
 #endif

@@ -888,7 +888,11 @@ ScummEngine_v60he::~ScummEngine_v60he() {
 ScummEngine_v70he::ScummEngine_v70he(OSystem *syst, const DetectorResult &dr)
 	: ScummEngine_v60he(syst, dr) {
 	if (_game.platform == Common::kPlatformMacintosh && (_game.heversion >= 72 && _game.heversion <= 74))
+#if USE_MACEXE
 		_resExtractor = new MacResExtractor(this);
+#else
+		_resExtractor = new NullResExtractor(this);
+#endif
 	else
 #if USE_WINEXE // Robin
 		_resExtractor = new Win32ResExtractor(this);

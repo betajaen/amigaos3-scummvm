@@ -163,6 +163,8 @@ bool Win32ResExtractor::extractResource(int id, CachedCursor *cc) {
 
 #endif // Robin
 
+#if USE_MACEXE // Robin
+
 MacResExtractor::MacResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {
 	_resMgr = NULL;
 }
@@ -226,6 +228,8 @@ bool MacResExtractor::extractResource(int id, CachedCursor *cc) {
 	delete dataStream;
 	return true;
 }
+
+#endif // Robin
 
 void ScummEngine_v70he::readRoomsOffsets() {
 	int num, i;

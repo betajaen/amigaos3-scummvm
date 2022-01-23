@@ -597,6 +597,7 @@ void ScummEngine_v5::resetCursors() {
 }
 
 void ScummEngine_v5::setBuiltinCursor(int idx) {
+	#ifdef USE_MACEXE
 	if (!_macCursorFile.empty()) {
 		Common::MacResManager resource;
 		if (resource.open(_macCursorFile)) {
@@ -612,6 +613,7 @@ void ScummEngine_v5::setBuiltinCursor(int idx) {
 			delete curs;
 		}
 	}
+	#endif
 
 	if (_game.id == GID_INDY3 && _macScreen) {
 		const byte buf[15 * 15] = {

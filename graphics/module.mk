@@ -13,19 +13,7 @@ MODULE_OBJS := \
 	fonts/newfont.o \
 	fonts/ttf.o \
 	korfont.o \
-	maccursor.o \
-	macgui/datafiles.o \
-	macgui/macbutton.o \
-	macgui/macfontmanager.o \
-	macgui/macmenu.o \
-	macgui/mactext.o \
-	macgui/mactextwindow.o \
-	macgui/macwidget.o \
-	macgui/macwindow.o \
-	macgui/macwindowborder.o \
-	macgui/macwindowmanager.o \
 	managed_surface.o \
-	nine_patch.o \
 	pixelformat.o \
 	primitives.o \
 	renderer.o \
@@ -136,6 +124,22 @@ endif
 ifdef USE_LARRYSCALE
 MODULE_OBJS += \
 	larryScale.o
+endif
+
+ifdef USE_MACEXE
+MODULE_OBJS += \
+	maccursor.o \
+	macgui/datafiles.o \
+	macgui/macbutton.o \
+	macgui/macfontmanager.o \
+	macgui/macmenu.o \
+	macgui/mactext.o \
+	macgui/mactextwindow.o \
+	macgui/macwidget.o \
+	macgui/macwindow.o \
+	macgui/macwindowborder.o \
+	macgui/macwindowmanager.o \
+	nine_patch.o
 endif
 
 # Include common rules
