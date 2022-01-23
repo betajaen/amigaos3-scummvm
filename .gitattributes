@@ -8,3 +8,8 @@
 /po/he.po encoding=iso-8859-8
 *.lingo	encoding=MacRoman
 /engines.awk eol=lf
+configure eol=lf
+Makefile eol=lf
+Makefile.common eol=lf
+ports.mk eol=lf
+rules.mk eol=lf

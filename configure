@@ -23,7 +23,7 @@
 
 set -a
 
-# NLS nuisances.
+# NLS nuisances. 
 LC_ALL=C
 LANGUAGE=C
 
