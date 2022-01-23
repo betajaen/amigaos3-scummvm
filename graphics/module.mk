@@ -13,7 +13,6 @@ MODULE_OBJS := \
 	fonts/newfont.o \
 	fonts/ttf.o \
 	korfont.o \
-	larryScale.o \
 	maccursor.o \
 	macgui/datafiles.o \
 	macgui/macbutton.o \
@@ -132,6 +131,11 @@ endif
 ifdef USE_SVG
 MODULE_OBJS += \
 	svg.o
+endif
+
+ifdef USE_LARRYSCALE
+MODULE_OBJS += \
+	larryScale.o
 endif
 
 # Include common rules
