@@ -33,7 +33,6 @@ MODULE_OBJS := \
 	random.o \
 	rational.o \
 	rendermode.o \
-	sinewindows.o \
 	str.o \
 	stream.o \
 	streamdebug.o \
@@ -129,6 +128,7 @@ endif
 ifdef USE_WMA
 	MODULES_OBJS += sinewindows.o
 endif
+
 
 # Robin End
 

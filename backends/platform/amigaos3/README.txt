@@ -15,5 +15,5 @@ Ensure the Amiga GCC compiler is within the path:
 ScummVM building (Manual)
 -------------------------
 
-	./configure --host=amigaos3 --disable-all-engines --enable-engine=scumm --amigaos3-processor=060 --amigaos3-arch=rtg --enable-release
+	./configure --host=amigaos3 --disable-all-engines --enable-engine=scumm --amigaos3-processor=060 --amigaos3-arch=rtg --enable-release --amigaos3-disable-features=json,wmf,asf,achievements,arj,winexe,wma
 	make amigaos3 -j16

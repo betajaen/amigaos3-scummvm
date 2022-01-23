@@ -287,5 +287,5 @@ dists/emscripten/libs/
 dists/emscripten/games/
 dists/emscripten/emsdk-*
 
-#Ignore AmigaOS3 build artifacts
+#Ignore amigaos3 build artifacts
 /amigaos3

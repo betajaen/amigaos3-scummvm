@@ -272,11 +272,13 @@ _amigaos3_user_define=""
 _amigaos3_processor_flags=""
 _amigaos3_arch_define=""
 # AmigaOS3 ScummVM feature reduction for smaller sizes
-_amigaos3_use_winexe=no		# Enable support for Windows executable reading, disables winfonts and cursors.
-_amigaos3_use_json=no		# Enable support for JSON files
-_amigaos3_use_unarg=no		# Enable support for ARJ files decompression
-_amigaos3_use_wma=no		# Enable support for WMA
-_amigaos3_use_xml=yes		# Enable support for XML
+_amigaos3_use_achievements=yes	# Support for Achievements
+_amigaos3_use_asf=yes			# Support for ASF
+_amigaos3_use_arj=yes			# Support for ARJ files decompression
+_amigaos3_use_json=yes			# Support for JSON files
+_amigaos3_use_winexe=yes		# Support for Windows executable reading, disables winfonts and cursors.
+_amigaos3_use_wma=yes			# Support for WMA
+_amigaos3_use_xml=yes			# Support for XML
 
 # Add (virtual) features
 add_feature 16bit "16bit color" "_16bit"
@@ -463,7 +465,7 @@ define_in_config_if_no() {
 # the line "#define $2" is added to config.h and "$2 = 1" to config.mk.
 # Otherwise "#undef $2" is added to config.h and "# $2 = 1" to config.mk
 # $3 is the name of the feature
-define_in_config_if_yes_and_print() {
+amigaos3_define_in_config_if_yes_and_print() {
 	echo_n "Checking for "
 	echo_n "$3... "
 	if test "$1" = yes ; then
@@ -792,6 +794,32 @@ copy_if_changed() {
 	fi
 }
 
+amigaos3_disable_feature() {
+	case $1 in
+		"achievements")
+			_amigaos3_use_achievements=no
+		;;
+		"asf")
+			_amigaos3_use_asf=no
+		;;
+		"arj")
+			_amigaos3_use_arj=no
+		;;
+		"json")
+			_amigaos3_use_json=no
+		;;
+		"winexe")
+			_amigaos3_use_winexe=no
+		;;
+		"wma")
+			_amigaos3_use_wma=no
+		;;
+		"xml")
+			_amigaos3_use_xml=no
+		;;
+	esac
+}
+
 #
 # Check any parameters we received
 #
@@ -880,6 +908,14 @@ Special configuration feature:
                                               aga, rtg
   --amigaos3-machine-flags=OPTION          AmigaOS3 extra machine flags
   --amigaos3-define=OPTION                 AmigaOS3 extra define
+  --amigaos3-disable-features=OPTIONS      AmigaOS3 disable features (Comma seperated):
+                                            achievements    Achievements
+                                            arj             ARJ files
+                                            asf             ASF files
+                                            json            JSON files
+                                            winexe          Windows executable reading, disables winfonts and cursors.
+                                            wma             WMA files
+                                            xml             XML files
 
 Game engines:
   --enable-all-engines     enable all engines, including those which are
@@ -1541,6 +1577,11 @@ for ac_option in $@; do
 		;;
 	--amigaos3-define=*)
 		_amigaos3_user_define=`echo $ac_option | cut -d '=' -f 2`
+		;;
+	--amigaos3-disable-features=*)
+		for feature_name in `echo $ac_option | cut -d '=' -f 2- | tr ',' '\n'`; do
+			amigaos3_disable_feature "${feature_name}"
+		done
 		;;
 	*)
 		option_error
@@ -3877,12 +3918,13 @@ case $_backend in
 	3ds)
 		;;
 	amigaos3)
-	
-			define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
-			define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
-			define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "WinEXE, WinCursor and WinFont"
-			define_in_config_if_yes_and_print "$_amigaos3_use_unarg" "USE_UNARJ" "UnARJ"
-			define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "WinEXE, WinCursor and WinFont"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_unarg" "USE_UNARJ" "UnARJ"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_asf" "USE_ASF" "ASF"
 
 		;;
 	android | android3d)

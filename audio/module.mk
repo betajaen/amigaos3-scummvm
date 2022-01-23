@@ -25,7 +25,6 @@ MODULE_OBJS := \
 	decoders/aac.o \
 	decoders/adpcm.o \
 	decoders/aiff.o \
-	decoders/asf.o \
 	decoders/flac.o \
 	decoders/g711.o \
 	decoders/iff_sound.o \
@@ -37,7 +36,6 @@ MODULE_OBJS := \
 	decoders/voc.o \
 	decoders/vorbis.o \
 	decoders/wave.o \
-	decoders/wma.o \
 	decoders/xa.o \
 	decoders/xan_dpcm.o \
 	mods/infogrames.o \
@@ -98,6 +96,16 @@ endif
 ifdef ENABLE_OPL2LPT
 MODULE_OBJS += \
 	opl2lpt.o
+endif
+
+ifdef USE_WMA
+MODULE_OBJS += \
+	decoders/wma.o
+endif
+
+ifdef USE_ASF
+MODULE_OBJS += \
+	decoders/asf.o
 endif
 
 # Include common rules
