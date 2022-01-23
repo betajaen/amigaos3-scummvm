@@ -36,7 +36,6 @@ MODULE_OBJS := \
 	scaler/normal.o \
 	sjis.o \
 	surface.o \
-	svg.o \
 	transform_struct.o \
 	transform_tools.o \
 	transparent_surface.o \
@@ -128,6 +127,11 @@ ifdef USE_WINEXE
 MODULE_OBJS += \
 	wincursor.o \
 	fonts/winfont.o
+endif
+
+ifdef USE_SVG
+MODULE_OBJS += \
+	svg.o
 endif
 
 # Include common rules

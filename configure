@@ -276,6 +276,7 @@ _amigaos3_use_achievements=yes	# Support for Achievements
 _amigaos3_use_asf=yes			# Support for ASF
 _amigaos3_use_arj=yes			# Support for ARJ files decompression
 _amigaos3_use_json=yes			# Support for JSON files
+_amigaos3_use_winexe=yes		# Support for SVG files
 _amigaos3_use_winexe=yes		# Support for Windows executable reading, disables winfonts and cursors.
 _amigaos3_use_wma=yes			# Support for WMA
 _amigaos3_use_xml=yes			# Support for XML
@@ -807,6 +808,9 @@ amigaos3_disable_feature() {
 		;;
 		"json")
 			_amigaos3_use_json=no
+		;;
+		"svg")
+			_amigaos3_use_svg=no
 		;;
 		"winexe")
 			_amigaos3_use_winexe=no
@@ -3918,13 +3922,14 @@ case $_backend in
 	3ds)
 		;;
 	amigaos3)
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "WinEXE, WinCursor and WinFont"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_unarg" "USE_UNARJ" "UnARJ"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_arj" "USE_UNARJ" "ARJ"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_asf" "USE_ASF" "ASF"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_svg" "USE_SVG" "SVG"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "WinEXE, WinCursor and WinFont"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
 
 		;;
 	android | android3d)

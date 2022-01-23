@@ -682,6 +682,7 @@ bool ThemeEngine::addBitmap(const Common::String &filename, const Common::String
 	}
 
 	if (!scalablefile.empty()) {
+		#ifdef USE_SVG // Robin
 		Graphics::SVGBitmap *image = nullptr;
 		Common::ArchiveMemberList members;
 		_themeFiles.listMatchingMembers(members, scalablefile);
@@ -703,6 +704,9 @@ bool ThemeEngine::addBitmap(const Common::String &filename, const Common::String
 		}
 
 		return true;
+		#else  // Robin
+		return false;
+		#endif
 	}
 
 	const Graphics::Surface *srcSurface = nullptr;
