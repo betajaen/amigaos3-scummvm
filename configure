@@ -275,13 +275,16 @@ _amigaos3_arch_define=""
 _amigaos3_use_achievements=yes	# Support for Achievements
 _amigaos3_use_asf=yes			# Support for ASF
 _amigaos3_use_arj=yes			# Support for ARJ files decompression
+_amigaos3_use_launcher=yes		# Support for the launcher
 _amigaos3_use_json=yes			# Support for JSON files
 _amigaos3_use_larryscale=yes	# Support for the LarryScale scaling feature
 _amigaos3_use_macexe=yes		# Support for Mac executable reading, disables winfonts, GUI and cursors.
 _amigaos3_use_svg=yes			# Support for SVG files
+_amigaos3_use_svq1=yes			# Support for SVQ1 files
 _amigaos3_use_winexe=yes		# Support for Windows executable reading, disables winfonts and cursors.
 _amigaos3_use_wma=yes			# Support for WMA
 _amigaos3_use_xml=yes			# Support for XML
+_amigaos3_use_3do=yes			# Support for 3DO audio
 
 # Add (virtual) features
 add_feature 16bit "16bit color" "_16bit"
@@ -799,6 +802,21 @@ copy_if_changed() {
 
 amigaos3_disable_feature() {
 	case $1 in
+		"min")
+			_amigaos3_use_achievements=no
+			_amigaos3_use_asf=no
+			_amigaos3_use_arj=no
+			_amigaos3_use_launcher=no
+			_amigaos3_use_json=no
+			_amigaos3_use_larryscale=no
+			_amigaos3_use_macexe=no
+			_amigaos3_use_svg=no
+			_amigaos3_use_winexe=no
+			_amigaos3_use_wma=no
+			_amigaos3_use_xml=yes
+			_amigaos3_use_3do=no
+			_amigaos3_use_svq1=no
+		;;
 		"achievements")
 			_amigaos3_use_achievements=no
 		;;
@@ -807,6 +825,9 @@ amigaos3_disable_feature() {
 		;;
 		"arj")
 			_amigaos3_use_arj=no
+		;;
+		"launcher")
+			_amigaos3_use_launcher=no
 		;;
 		"json")
 			_amigaos3_use_json=no
@@ -828,6 +849,9 @@ amigaos3_disable_feature() {
 		;;
 		"xml")
 			_amigaos3_use_xml=no
+		;;
+		"3do")
+			_amigaos3_use_3do=no
 		;;
 	esac
 }
@@ -925,12 +949,14 @@ Special configuration feature:
                                             arj             ARJ files
                                             asf             ASF files
                                             json            JSON files
-                                            macexe          Mac executables, GUIs, winfonts and cursors.
+                                            launcher        The GUI launcher
                                             larryscale      LarryScale scaling
+                                            macexe          Mac executables, GUIs, winfonts and cursors.
                                             winexe          Windows executables, winfonts and cursors.
                                             svg             SVG files
                                             wma             WMA files
                                             xml             XML files
+                                            3do             3DO audio files
 
 Game engines:
   --enable-all-engines     enable all engines, including those which are
@@ -3936,14 +3962,16 @@ case $_backend in
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_arj" "USE_UNARJ" "ARJ"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_asf" "USE_ASF" "ASF"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_gui" "USE_GUI" "GUI"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_macexe" "USE_MACEXE" "Mac executables, GUI, cursors and font"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_larryscale" "USE_LARRYSCALE" "LarryScale"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_svg" "USE_SVG" "SVG"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_svq1" "USE_SVQ1" "SVQ1"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "Win executables, cursors and fonts"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
-
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_3do" "USE_3DO" "3DO Audio Files"
 		;;
 	android | android3d)
 		append_var DEFINES "-DREDUCE_MEMORY_USAGE"

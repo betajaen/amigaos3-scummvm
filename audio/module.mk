@@ -21,7 +21,6 @@ MODULE_OBJS := \
 	null.o \
 	rate.o \
 	timestamp.o \
-	decoders/3do.o \
 	decoders/aac.o \
 	decoders/adpcm.o \
 	decoders/aiff.o \
@@ -106,6 +105,11 @@ endif
 ifdef USE_ASF
 MODULE_OBJS += \
 	decoders/asf.o
+endif
+
+ifdef USE_3DO
+MODULE_OBJS += \
+	decoders/3do.o
 endif
 
 # Include common rules

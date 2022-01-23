@@ -1,7 +1,6 @@
 MODULE := video
 
 MODULE_OBJS := \
-	3do_decoder.o \
 	avi_decoder.o \
 	coktel_decoder.o \
 	dxa_decoder.o \
@@ -22,6 +21,11 @@ endif
 ifdef USE_THEORADEC
 MODULE_OBJS += \
 	theora_decoder.o
+endif
+
+ifdef USE_3DO
+MODULE_OBJS += \
+	3do_decoder.o
 endif
 
 # Include common rules

@@ -320,6 +320,7 @@ int Audio3DO_SDX2_Stream::readBuffer(int16 *buffer, const int numSamples) {
 }
 
 RewindableAudioStream *make3DO_SDX2AudioStream(Common::SeekableReadStream *stream, uint16 sampleRate, bool stereo, uint32 *audioLengthMSecsPtr, DisposeAfterUse::Flag disposeAfterUse, audio_3DO_SDX2_PersistentSpace *persistentSpace) {
+	#if USE_3DO // Robin
 	if (stereo) {
 		if (stream->size() & 1) {
 			warning("make3DO_SDX2Stream(): stereo data is uneven size");
@@ -337,6 +338,9 @@ RewindableAudioStream *make3DO_SDX2AudioStream(Common::SeekableReadStream *strea
 	}
 
 	return new Audio3DO_SDX2_Stream(stream, sampleRate, stereo, disposeAfterUse, persistentSpace);
+	#else
+	return NULL;
+	#endif
 }
 
 } // End of namespace Audio

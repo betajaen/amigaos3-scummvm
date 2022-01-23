@@ -263,9 +263,11 @@ Codec *createQuickTimeCodec(uint32 tag, int width, int height, int bitsPerPixel)
 	case MKTAG('s','m','c',' '):
 		// Apple SMC: Used by some Myst videos.
 		return new SMCDecoder(width, height);
+#ifdef USE_SVQ1
 	case MKTAG('S','V','Q','1'):
 		// Sorenson Video 1: Used by some Myst ME videos.
 		return new SVQ1Decoder(width, height);
+#endif
 	case MKTAG('S','V','Q','3'):
 		// Sorenson Video 3: Used by some Myst ME videos.
 		warning("Sorenson Video 3 not yet supported");

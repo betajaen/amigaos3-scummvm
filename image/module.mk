@@ -26,7 +26,6 @@ MODULE_OBJS := \
 	codecs/qtrle.o \
 	codecs/rpza.o \
 	codecs/smc.o \
-	codecs/svq1.o \
 	codecs/truemotion1.o \
 	codecs/xan.o \
 	codecs/indeo/indeo.o \
@@ -37,6 +36,11 @@ MODULE_OBJS := \
 ifdef USE_MPEG2
 MODULE_OBJS += \
 	codecs/mpeg.o
+endif
+
+ifdef USE_SVQ1
+MODULE_OBJS += \
+	codecs/svq1.o
 endif
 
 # Include common rules

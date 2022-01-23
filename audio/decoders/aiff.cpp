@@ -220,12 +220,16 @@ RewindableAudioStream *makeAIFFStream(Common::SeekableReadStream *stream, Dispos
 		// (But hopefully never needed)
 		warning("Unhandled AIFF-C QDM2 compression");
 		break;
+#ifdef USE_3DO
 	case MKTAG('A', 'D', 'P', '4'):
 		// ADP4 on 3DO
 		return make3DO_ADP4AudioStream(dataStream, rate, channels == 2);
 	case MKTAG('S', 'D', 'X', '2'):
 		// SDX2 on 3DO
 		return make3DO_SDX2AudioStream(dataStream, rate, channels == 2);
+#else
+		warning("Unhandled 3DO audio stream");
+#endif
 	default:
 		warning("Unhandled AIFF-C compression tag '%s'", tag2str(codec));
 	}
