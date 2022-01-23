@@ -72,11 +72,13 @@ void Sound::initFromAIFFFile(const Common::String &fileName) {
 
 void Sound::initFromQuickTime(const Common::String &fileName) {
 	disposeSound();
-
+	#ifdef USE_QUICKTIME // Robin
 	_stream = Audio::makeQuickTimeStream(fileName);
-
 	if (!_stream)
 		warning("Failed to open QuickTime file '%s'", fileName.c_str());
+	#else
+	warning("Failed to open QuickTime file '%s'", fileName.c_str());
+	#endif
 }
 
 void Sound::attachFader(SoundFader *fader) {

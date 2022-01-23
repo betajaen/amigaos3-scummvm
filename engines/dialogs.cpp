@@ -44,6 +44,8 @@
 #include "engines/engine.h"
 #include "engines/metaengine.h"
 
+#if USE_LAUNCHER
+
 MainMenuDialog::MainMenuDialog(Engine *engine)
 	: GUI::Dialog("GlobalMenu"), _engine(engine) {
 	_backgroundType = GUI::ThemeEngine::kDialogBackgroundSpecial;
@@ -229,8 +231,11 @@ void MainMenuDialog::load() {
 	if (slot >= 0)
 		close();
 }
+#endif
 
 namespace GUI {
+
+#if USE_LAUNCHER
 
 // FIXME: We use the empty string as domain name here. This tells the
 // ConfigManager to use the 'default' domain for all its actions. We do that
@@ -376,6 +381,8 @@ void ConfigDialog::apply() {
 
 	OptionsDialog::apply();
 }
+
+#endif
 
 ExtraGuiOptionsWidget::ExtraGuiOptionsWidget(GuiObject *containerBoss, const Common::String &name, const Common::String &domain, const ExtraGuiOptions &options) :
 		OptionsContainerWidget(containerBoss, name, dialogLayout(domain), true, domain),

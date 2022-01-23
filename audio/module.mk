@@ -30,7 +30,6 @@ MODULE_OBJS := \
 	decoders/mac_snd.o \
 	decoders/mp3.o \
 	decoders/qdm2.o \
-	decoders/quicktime.o \
 	decoders/raw.o \
 	decoders/voc.o \
 	decoders/vorbis.o \
@@ -110,6 +109,11 @@ endif
 ifdef USE_3DO
 MODULE_OBJS += \
 	decoders/3do.o
+endif
+
+ifdef USE_QUICKTIME
+MODULE_OBJS += \
+	decoders/quicktime.o
 endif
 
 # Include common rules

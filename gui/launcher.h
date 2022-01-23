@@ -26,6 +26,8 @@
 #include "gui/dialog.h"
 #include "engines/game.h"
 
+#ifdef USE_LAUNCHER // Robin
+
 namespace GUI {
 
 class BrowserDialog;
@@ -129,5 +131,7 @@ private:
 };
 
 } // End of namespace GUI
+
+#endif
 
 #endif

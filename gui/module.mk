@@ -2,25 +2,20 @@ MODULE := gui
 
 MODULE_OBJS := \
 	about.o \
-	browser.o \
 	chooser.o \
 	console.o \
 	debugger.o \
 	dialog.o \
-	editgamedialog.o \
 	error.o \
 	EventRecorder.o \
 	filebrowser-dialog.o \
 	gui-manager.o \
-	launcher.o \
 	massadd.o \
 	message.o \
 	object.o \
-	options.o \
 	predictivedialog.o \
 	saveload.o \
 	saveload-dialog.o \
-	themebrowser.o \
 	ThemeEngine.o \
 	ThemeEval.o \
 	ThemeLayout.o \
@@ -62,6 +57,15 @@ endif
 ifdef USE_UPDATES
 MODULE_OBJS += \
 	updates-dialog.o
+endif
+
+ifdef USE_LAUNCHER
+MODULE_OBJS += \
+	launcher.o \
+	options.o \
+	editgamedialog.o \
+	themebrowser.o \
+	browser.o
 endif
 
 # Include common rules

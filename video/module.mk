@@ -9,7 +9,6 @@ MODULE_OBJS := \
 	mpegps_decoder.o \
 	mve_decoder.o \
 	psx_decoder.o \
-	qt_decoder.o \
 	smk_decoder.o \
 	video_decoder.o
 
@@ -26,6 +25,11 @@ endif
 ifdef USE_3DO
 MODULE_OBJS += \
 	3do_decoder.o
+endif
+
+ifdef USE_QUICKTIME
+MODULE_OBJS += \
+	qt_decoder.o
 endif
 
 # Include common rules

@@ -62,7 +62,9 @@ static const StreamFileFormat STREAM_FILEFORMATS[] = {
 #ifdef USE_MAD
 	{ "MPEG Layer 3", ".mp3",  makeMP3Stream },
 #endif
+#ifdef USE_QUICKTIME
 	{ "MPEG-4 Audio", ".m4a",  makeQuickTimeStream },
+#endif
 	{ "WAV",          ".wav",  makeWAVStream },
 };
 

@@ -659,6 +659,7 @@ void Engine::pauseEngineIntern(bool pause) {
 }
 
 void Engine::openMainMenuDialog() {
+	#ifdef USE_LAUNCHER // Robin
 	if (!_mainMenuDialog)
 		_mainMenuDialog = new MainMenuDialog(this);
 	Common::TextToSpeechManager *ttsMan = g_system->getTextToSpeechManager();
@@ -699,6 +700,7 @@ void Engine::openMainMenuDialog() {
 	g_system->applyBackendSettings();
 	applyGameSettings();
 	syncSoundSettings();
+	#endif
 }
 
 bool Engine::warnUserAboutUnsupportedGame(Common::String msg) {

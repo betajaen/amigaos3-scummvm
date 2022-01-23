@@ -712,6 +712,7 @@ public:
 };
 
 SeekableAudioStream *makeQuickTimeStream(const Common::String &filename) {
+	#ifdef USE_QUICKTIME // Robin
 	QuickTimeAudioStream *audioStream = new QuickTimeAudioStream();
 
 	if (!audioStream->openFromFile(filename)) {
@@ -720,9 +721,13 @@ SeekableAudioStream *makeQuickTimeStream(const Common::String &filename) {
 	}
 
 	return audioStream;
+	#else
+	return NULL;
+	#endif
 }
 
 SeekableAudioStream *makeQuickTimeStream(Common::SeekableReadStream *stream, DisposeAfterUse::Flag disposeAfterUse) {
+#ifdef USE_QUICKTIME // Robin
 	QuickTimeAudioStream *audioStream = new QuickTimeAudioStream();
 
 	if (!audioStream->openFromStream(stream, disposeAfterUse)) {
@@ -731,6 +736,9 @@ SeekableAudioStream *makeQuickTimeStream(Common::SeekableReadStream *stream, Dis
 	}
 
 	return audioStream;
+#else
+	return NULL;
+#endif
 }
 
 } // End of namespace Audio

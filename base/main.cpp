@@ -84,7 +84,9 @@
 #if defined(__DC__)
 #include "backends/platform/dc/DCLauncherDialog.h"
 #else
+#ifdef USE_LAUNCHER // Robin
 #include "gui/launcher.h"
+#endif
 #endif
 
 #ifdef USE_UPDATES
@@ -98,12 +100,16 @@ static bool launcherDialog() {
 	// blindly be passed to the first game launched from the launcher.
 	ConfMan.getDomain(Common::ConfigManager::kTransientDomain)->clear();
 
+#ifndef USE_LAUNCHER // Robin
+	return false;
+#else
 #if defined(__DC__)
 	DCLauncherDialog dlg;
 #else
 	GUI::LauncherDialog dlg;
 #endif
 	return (dlg.runModal() != -1);
+#endif
 }
 
 static const Plugin *detectPlugin() {
