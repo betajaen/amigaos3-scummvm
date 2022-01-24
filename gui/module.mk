@@ -1,13 +1,10 @@
 MODULE := gui
 
 MODULE_OBJS := \
-	about.o \
 	chooser.o \
 	console.o \
 	debugger.o \
 	dialog.o \
-	error.o \
-	EventRecorder.o \
 	gui-manager.o \
 	massadd.o \
 	message.o \
@@ -41,7 +38,8 @@ ifdef ENABLE_EVENTRECORDER
 MODULE_OBJS += \
 	editrecorddialog.o \
 	onscreendialog.o \
-	recorderdialog.o
+	recorderdialog.o \
+	EventRecorder.o 
 endif
 
 ifdef USE_FLUIDSYNTH
@@ -65,7 +63,9 @@ MODULE_OBJS += \
 	saveload-dialog.o \
 	filebrowser-dialog.o \
 	unknown-game-dialog.o \
-	saveload.o
+	saveload.o \
+	about.o \
+	error.o 
 endif
 
 # Include common rules

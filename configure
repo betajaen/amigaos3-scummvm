@@ -3988,6 +3988,11 @@ case $_backend in
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_3do" "USE_3DO" "3DO Audio Files"
+
+			if test "$_amigaos3_use_launcher" = "no"; then
+				append_var DEFINES "-DDISABLE_GUI_BUILTIN_THEME"
+			fi
+
 		;;
 	android | android3d)
 		append_var DEFINES "-DREDUCE_MEMORY_USAGE"

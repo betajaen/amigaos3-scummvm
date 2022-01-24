@@ -21,6 +21,9 @@
  */
 
 #include "engines/engine.h"
+#include "common/error.h"
+#include "common/str.h"
+#include "common/str-enc.h"
 
 
 bool amigaos3_load_game_gui(Engine* engine) {
@@ -42,3 +45,21 @@ int amigaos3_prompt_yes_no(const char* text) {
 int amigaos3_prompt_yes_no_cancel(const char *text) {
 	return 0;
 }
+
+
+// Overrides
+
+namespace GUI {
+
+void displayErrorDialog(const Common::U32String &text) {
+	amigaos3_prompt_okay(text.encode(Common::CodePage::kASCII).c_str());
+}
+
+void displayErrorDialog(const Common::Error &error, const Common::U32String &extraText) {
+	Common::U32String errorText(extraText);
+	errorText += Common::U32String(" ");
+	errorText += error.getDesc();
+	displayErrorDialog(errorText);
+}
+
+} // End of namespace GUI
