@@ -30,6 +30,8 @@
 
 #include "common/gui_options.h" // FIXME: Temporary hack?
 
+#ifndef DISABLE_ADVANCEDDETECTOR
+
 namespace Common {
 class Error;
 class FSList;
@@ -561,4 +563,5 @@ private:
 /** Convenience shortcut for accessing the MD5CacheManager. */
 #define MD5Man MD5CacheManager::instance()
 /** @} */
+#endif
 #endif

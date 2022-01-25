@@ -20,6 +20,8 @@
  *
  */
 
+#ifdef DISABLE_ADVANCEDDETECTOR
+
 #include "common/debug.h"
 #include "common/util.h"
 #include "common/file.h"
@@ -779,3 +781,5 @@ Common::Error AdvancedMetaEngine::createInstance(OSystem *syst, Engine **engine)
 
 	return Common::Error();
 }
+
+#endif

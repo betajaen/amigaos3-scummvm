@@ -3427,6 +3427,7 @@ if test -n "$_host"; then
 			append_var DEFINES "-DDISABLE_STDIO_FILESTREAM"
 			append_var DEFINES "-DDISABLE_PSP_MP3"
 			append_var DEFINES "-DDISABLE_HELP"
+			append_var DEFINES "-DDISABLE_ADVANCEDDETECTOR"
 
 			append_var DEFINES "-DREGPARM=__attribute__\(\(regparm\(3\)\)\)"
 			# append_var DEFINES "-DFORBIDDEN_SYMBOL_ALLOW_ALL -DSTDCALL=__stdargs -DHAVE_CONFIG_H"

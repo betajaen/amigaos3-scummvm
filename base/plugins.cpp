@@ -721,6 +721,7 @@ QualifiedGameList EngineManager::findGameInLoadedPlugins(const Common::String &g
 }
 
 DetectionResults EngineManager::detectGames(const Common::FSList &fslist) const {
+#ifndef DISABLE_ADVANCEDDETECTOR
 	DetectedGames candidates;
 	PluginList plugins;
 	PluginList::const_iterator iter;
@@ -748,6 +749,10 @@ DetectionResults EngineManager::detectGames(const Common::FSList &fslist) const 
 	}
 
 	return DetectionResults(candidates);
+#else
+	DetectedGames candidates;
+	return DetectionResults(candidates);
+#endif
 }
 
 const PluginList &EngineManager::getPlugins(const PluginType fetchPluginType) const {
