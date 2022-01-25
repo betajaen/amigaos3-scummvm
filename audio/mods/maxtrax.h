@@ -22,6 +22,7 @@
 
 // Only compiled if Kyra is built-in or we're building for dynamic modules
 #if !defined(AUDIO_MODS_MAXTRAX_H) && (defined(ENABLE_KYRA) || defined(DYNAMIC_MODULES))
+#ifdef USE_AMIGARES
 #define AUDIO_MODS_MAXTRAX_H
 
 // #define MAXTRAX_HAS_MODULATION
@@ -217,3 +218,4 @@ private:
 } // End of namespace Audio
 
 #endif // !defined(AUDIO_MODS_MAXTRAX_H)
+#endif

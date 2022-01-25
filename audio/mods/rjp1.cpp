@@ -20,6 +20,7 @@
  *
  */
 
+
 #include "common/debug.h"
 #include "common/endian.h"
 #include "common/stream.h"
@@ -31,6 +32,7 @@
 
 namespace Audio {
 
+#ifdef USE_AMIGARES
 struct Rjp1Channel {
 	const int8 *waveData;
 	const int8 *modulatePeriodData;
@@ -570,7 +572,11 @@ const int16 Rjp1::_periodsTable[] = {
 
 const int Rjp1::_periodsCount = ARRAYSIZE(_periodsTable);
 
+#endif
+
 AudioStream *makeRjp1Stream(Common::SeekableReadStream *songData, Common::SeekableReadStream *instrumentsData, int num, int rate, bool stereo) {
+
+#ifdef USE_AMIGARES
 	Rjp1 *stream = new Rjp1(rate, stereo);
 	if (stream->load(songData, instrumentsData)) {
 		if (num < 0) {
@@ -582,6 +588,9 @@ AudioStream *makeRjp1Stream(Common::SeekableReadStream *songData, Common::Seekab
 	}
 	delete stream;
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 } // End of namespace Audio

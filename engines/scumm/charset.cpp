@@ -1502,7 +1502,7 @@ void CharsetRendererPCE::setDrawCharIntern(uint16 chr) {
 }
 #endif
 
-#ifdef USE_MACEXE
+#ifdef USE_MACRES
 CharsetRendererMac::CharsetRendererMac(ScummEngine *vm, const Common::String &fontFile, bool correctFontSpacing)
 	 : CharsetRendererCommon(vm) {
 

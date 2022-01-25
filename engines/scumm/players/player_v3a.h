@@ -23,6 +23,8 @@
 #ifndef SCUMM_PLAYERS_PLAYER_V3A_H
 #define SCUMM_PLAYERS_PLAYER_V3A_H
 
+#ifdef USE_AMIGARES
+
 #include "common/scummsys.h"
 #include "scumm/music.h"
 #include "scumm/players/player_mod.h"
@@ -98,4 +100,5 @@ private:
 
 } // End of namespace Scumm
 
+#endif
 #endif

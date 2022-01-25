@@ -36,16 +36,12 @@ MODULE_OBJS := \
 	decoders/wave.o \
 	decoders/xa.o \
 	decoders/xan_dpcm.o \
-	mods/infogrames.o \
-	mods/maxtrax.o \
 	mods/mod_xm_s3m.o \
 	mods/module.o \
 	mods/module_mod_xm_s3m.o \
 	mods/protracker.o \
-	mods/paula.o \
 	mods/rjp1.o \
 	mods/soundfx.o \
-	mods/tfmx.o \
 	softsynth/cms.o \
 	softsynth/opl/dbopl.o \
 	softsynth/opl/dosbox.o \
@@ -114,6 +110,14 @@ endif
 ifdef USE_QUICKTIME
 MODULE_OBJS += \
 	decoders/quicktime.o
+endif
+
+ifdef USE_AMIGARES
+MODULE_OBJS += \
+	mods/paula.o \
+	mods/tfmx.o \
+	mods/infogrames.o \
+	mods/maxtrax.o
 endif
 
 # Include common rules

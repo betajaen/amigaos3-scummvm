@@ -22,6 +22,7 @@
 
 // Only compiled if SCUMM is built-in or we're building for dynamic modules
 #if !defined(AUDIO_MODS_TFMX_H) && (defined(ENABLE_SCUMM) || defined(DYNAMIC_MODULES))
+#ifdef USE_AMIGARES
 #define AUDIO_MODS_TFMX_H
 
 #include "audio/mods/paula.h"
@@ -276,3 +277,4 @@ private:
 } // End of namespace Audio
 
 #endif // !defined(AUDIO_MODS_TFMX_H)
+#endif // defined(USE_AMIGARES)

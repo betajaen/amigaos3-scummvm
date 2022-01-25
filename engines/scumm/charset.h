@@ -275,7 +275,7 @@ public:
 	int getCharWidth(uint16 chr) override { return 8; }
 };
 
-#ifdef USE_MACEXE
+#ifdef USE_MACRES
 class CharsetRendererMac : public CharsetRendererCommon {
 protected:
 	Graphics::MacFONTFont _macFonts[2];

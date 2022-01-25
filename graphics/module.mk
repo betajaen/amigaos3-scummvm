@@ -108,7 +108,7 @@ endif
 
 endif
 
-ifdef USE_WINEXE
+ifdef USE_WINRES
 MODULE_OBJS += \
 	wincursor.o \
 	fonts/winfont.o
@@ -124,7 +124,7 @@ MODULE_OBJS += \
 	larryScale.o
 endif
 
-ifdef USE_MACEXE
+ifdef USE_MACRES
 MODULE_OBJS += \
 	maccursor.o \
 	macgui/datafiles.o \
@@ -141,7 +141,7 @@ MODULE_OBJS += \
 	nine_patch.o
 endif
 
-ifdef USE_AMIGA_FONT
+ifdef USE_AMIGARES
 MODULE_OBJS += \
 	fonts/amigafont.o
 endif

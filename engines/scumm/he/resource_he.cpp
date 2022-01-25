@@ -113,7 +113,7 @@ void ResExtractor::setCursor(int id) {
 	_vm->setCursorFromBuffer(cc->bitmap, cc->width, cc->height, cc->width);
 }
 
-#if USE_WINEXE // Robin
+#if USE_WINRES // Robin
 
 Win32ResExtractor::Win32ResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {
 	_exe = new Common::PEResources();
@@ -163,7 +163,7 @@ bool Win32ResExtractor::extractResource(int id, CachedCursor *cc) {
 
 #endif // Robin
 
-#if USE_MACEXE // Robin
+#if USE_MACRES // Robin
 
 MacResExtractor::MacResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {
 	_resMgr = NULL;

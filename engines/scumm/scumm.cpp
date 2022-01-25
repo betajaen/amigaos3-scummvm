@@ -888,13 +888,13 @@ ScummEngine_v60he::~ScummEngine_v60he() {
 ScummEngine_v70he::ScummEngine_v70he(OSystem *syst, const DetectorResult &dr)
 	: ScummEngine_v60he(syst, dr) {
 	if (_game.platform == Common::kPlatformMacintosh && (_game.heversion >= 72 && _game.heversion <= 74))
-#if USE_MACEXE
+#if USE_MACRES
 		_resExtractor = new MacResExtractor(this);
 #else
 		_resExtractor = new NullResExtractor(this);
 #endif
 	else
-#if USE_WINEXE // Robin
+#if USE_WINRES // Robin
 		_resExtractor = new Win32ResExtractor(this);
 #else
 		_resExtractor = new NullResExtractor(this);
@@ -1512,8 +1512,8 @@ void ScummEngine::setupScumm(const Common::String &macResourceFile) {
 	Common::String macFontFile;
 
 	if (_game.platform == Common::kPlatformMacintosh) {
-#ifndef USE_MACEXE
-		error("SCUMM Engine was not built with Mac Executable suport (USE_MACEXE)");
+#ifndef USE_MACRES
+		error("SCUMM Engine was not built with Mac Executable suport (USE_MACRES)");
 		return;
 #else
 		if (_game.id == GID_INDY3) {
@@ -1680,12 +1680,12 @@ void ScummEngine::setupCharsetRenderer(const Common::String &macFontFile) {
 		if (_game.platform == Common::kPlatformFMTowns)
 			_charset = new CharsetRendererTownsV3(this);
 		else if (_game.platform == Common::kPlatformMacintosh && !macFontFile.empty()) {
-#ifdef USE_MACEXE
+#ifdef USE_MACRES
 			bool correctFontSpacing = _game.id == GID_LOOM || ConfMan.getBool("mac_v3_correct_font_spacing");
 			_charset = new CharsetRendererMac(this, macFontFile, correctFontSpacing);
 #else
 			_charset = NULL;
-			error("Cannot create CharsetRendererMac due to missing USE_MACEXE not being defined!");
+			error("Cannot create CharsetRendererMac due to missing USE_MACRES not being defined!");
 #endif
 		} else
 			_charset = new CharsetRendererV3(this);
@@ -2185,15 +2185,27 @@ void ScummEngine::setupMusic(int midi, const Common::String &macInstrumentFile) 
 		_musicEngine = new Player_NES(this, _mixer);
 #endif
 	} else if (_game.platform == Common::kPlatformAmiga && _game.version == 2) {
+#if USE_AMIGARES
 		_musicEngine = new Player_V2A(this, _mixer);
+#else
+		_musicEngine = 0;
+#endif
 	} else if (_game.platform == Common::kPlatformAmiga && _game.version == 3) {
+#if USE_AMIGARES
 		_musicEngine = new Player_V3A(this, _mixer);
+#else
+		_musicEngine = 0;
+#endif
 #ifdef USE_RGB_COLOR
 	} else if (_game.platform == Common::kPlatformPCEngine && _game.version == 3) {
 		_musicEngine = new Player_PCE(this, _mixer);
 #endif
 	} else if (_game.platform == Common::kPlatformAmiga && _game.version <= 4) {
+#if USE_AMIGARES
 		_musicEngine = new Player_V4A(this, _mixer);
+#else
+		_musicEngine = 0;
+#endif
 	} else if (_game.platform == Common::kPlatformMacintosh && _game.id == GID_LOOM) {
 		_musicEngine = new Player_V3M(this, _mixer, ConfMan.getBool("mac_v3_low_quality_music"));
 		((Player_V3M *)_musicEngine)->init(macInstrumentFile);
@@ -2242,9 +2254,13 @@ void ScummEngine::setupMusic(int midi, const Common::String &macInstrumentFile) 
 			// Ignore non-native drivers. This also ignores the multi MIDI setting.
 			useOnlyNative = true;
 		} else if (_sound->_musicType == MDT_AMIGA) {
+#ifdef USE_AMIGARES
 			nativeMidiDriver = new IMuseDriver_Amiga(_mixer);
 			_native_mt32 = _enable_gs = false;
 			useOnlyNative = true;
+#else
+			nativeMidiDriver = 0;
+#endif
 		} else if (_sound->_musicType != MDT_ADLIB && _sound->_musicType != MDT_TOWNS && _sound->_musicType != MDT_PCSPK) {
 			nativeMidiDriver = MidiDriver::createMidi(dev);
 		}

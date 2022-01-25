@@ -27,6 +27,8 @@
 #include "common/frac.h"
 #include "common/mutex.h"
 
+#ifdef USE_AMIGARES
+
 namespace Audio {
 
 /**
@@ -230,4 +232,5 @@ private:
 
 } // End of namespace Audio
 
+#endif
 #endif

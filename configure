@@ -817,6 +817,7 @@ amigaos3_disable_feature() {
 			_amigaos3_use_launcher=no
 			_amigaos3_use_macexe=no
 			_amigaos3_use_quicktime=no
+			_amigaos3_use_stuffit=no
 			_amigaos3_use_svg=no
 			_amigaos3_use_winexe=no
 			_amigaos3_use_wma=no
@@ -854,6 +855,9 @@ amigaos3_disable_feature() {
 		;;
 		"quicktime")
 			_amigaos3_use_quicktime=no
+		;;
+		"stuffit")
+			_amigaos3_use_stuffit=no
 		;;
 		"svg")
 			_amigaos3_use_svg=no
@@ -3985,18 +3989,19 @@ case $_backend in
 		;;
 	amigaos3)
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_amiga_font" "USE_AMIGA_FONT" "Amiga Font"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_amigares" "USE_AMIGARES" "Amiga resources"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_arj" "USE_UNARJ" "ARJ"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_asf" "USE_ASF" "ASF"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_gui" "USE_GUI" "GUI"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_json" "USE_JSON" "JSON"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_macexe" "USE_MACEXE" "Mac executables, GUI, cursors and font"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_macexe" "USE_MACRES" "Macintosh resources"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_larryscale" "USE_LARRYSCALE" "LarryScale"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_launcher" "USE_LAUNCHER" "GUI Launcher"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_quicktime" "USE_QUICKTIME" "QuickTime"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_stuffit" "USE_STUFFIT" "Stuff It"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_svg" "USE_SVG" "SVG"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_svq1" "USE_SVQ1" "SVQ1"
-			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINEXE" "Win executables, cursors and fonts"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_winexe" "USE_WINRES" "Windows resources"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_3do" "USE_3DO" "3DO Audio Files"

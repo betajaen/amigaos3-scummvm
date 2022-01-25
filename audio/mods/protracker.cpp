@@ -21,6 +21,9 @@
  */
 
 #include "audio/mods/protracker.h"
+
+#ifdef USE_AMIGARES
+
 #include "audio/mods/paula.h"
 #include "audio/mods/module.h"
 
@@ -467,15 +470,19 @@ void ProtrackerStream::interrupt() {
 }
 
 } // End of namespace Modules
-
+#endif
 namespace Audio {
 
 AudioStream *makeProtrackerStream(Common::SeekableReadStream *stream, int offs, int rate, bool stereo, Modules::Module **module) {
+	#ifdef USE_AMIGARES
 	Modules::ProtrackerStream *protrackerStream = new Modules::ProtrackerStream(stream, offs, rate, stereo);
 	if (module) {
 		*module = protrackerStream->getModule();
 	}
 	return (AudioStream *)protrackerStream;
+	#else
+	return 0;
+	#endif
 }
 
 } // End of namespace Audio

@@ -23,6 +23,8 @@
 #ifndef IMUSE_DRV_AMIGA_H
 #define IMUSE_DRV_AMIGA_H
 
+#ifdef USE_AMIGARES
+
 #include "audio/mididrv.h"
 #include "audio/mods/paula.h"
 #include "audio/mixer.h"
@@ -82,4 +84,5 @@ private:
 
 }
 
+#endif
 #endif

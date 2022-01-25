@@ -28,7 +28,7 @@
 #include "audio/mods/soundfx.h"
 
 namespace Audio {
-
+#ifdef USE_AMIGARES
 struct SoundFxInstrument {
 	char name[23];
 	uint16 len;
@@ -268,8 +268,9 @@ void SoundFx::setupPaulaChannel(uint8 channel, const int8 *data, uint16 len, uin
 void SoundFx::interrupt() {
 	handleTick();
 }
-
+#endif
 AudioStream *makeSoundFxStream(Common::SeekableReadStream *data, LoadSoundFxInstrumentCallback loadCb, int rate, bool stereo, bool repeat, int periodScaleDivisor) {
+#ifdef USE_AMIGARES
 	SoundFx *stream = new SoundFx(rate, stereo, repeat, periodScaleDivisor);
 	if (stream->load(data, loadCb)) {
 		stream->play();
@@ -277,6 +278,9 @@ AudioStream *makeSoundFxStream(Common::SeekableReadStream *data, LoadSoundFxInst
 	}
 	delete stream;
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 } // End of namespace Audio

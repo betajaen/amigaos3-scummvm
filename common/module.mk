@@ -110,7 +110,7 @@ endif
 ifdef USE_XML
 	MODULE_OBJS += xmlparser.o
 endif
-ifdef USE_WINEXE
+ifdef USE_WINRES
 	MODULES_OBJS += \
 		winexe.o \
 		winexe_ne.o \
@@ -119,7 +119,7 @@ endif
 ifdef USE_STUFFIT
 	MODULES_OBJS += stuffit.o
 endif
-ifdef USE_UNARJ
+ifdef USE_ARJ
 	MODULES_OBJS += unarj.o
 endif
 ifdef USE_ACHIEVEMENTS

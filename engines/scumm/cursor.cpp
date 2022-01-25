@@ -597,7 +597,7 @@ void ScummEngine_v5::resetCursors() {
 }
 
 void ScummEngine_v5::setBuiltinCursor(int idx) {
-	#ifdef USE_MACEXE
+	#ifdef USE_MACRES
 	if (!_macCursorFile.empty()) {
 		Common::MacResManager resource;
 		if (resource.open(_macCursorFile)) {

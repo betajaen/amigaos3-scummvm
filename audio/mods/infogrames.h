@@ -29,6 +29,8 @@
 #ifndef AUDIO_MODS_INFOGRAMES_H
 #define AUDIO_MODS_INFOGRAMES_H
 
+#ifdef USE_AMIGARES
+
 #include "audio/mods/paula.h"
 
 namespace Common {
@@ -145,4 +147,5 @@ protected:
 
 } // End of namespace Audio
 
+#endif
 #endif

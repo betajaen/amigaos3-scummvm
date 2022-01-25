@@ -68,7 +68,7 @@ private:
 	CachedCursor _cursorCache[MAX_CACHED_CURSORS];
 };
 
-#if USE_WINEXE
+#if USE_WINRES
 class Win32ResExtractor : public ResExtractor {
 public:
 	Win32ResExtractor(ScummEngine_v70he *scumm);
@@ -80,7 +80,7 @@ private:
 };
 #endif
 
-#if USE_MACEXE
+#if USE_MACRES
 class MacResExtractor : public ResExtractor {
 public:
 	MacResExtractor(ScummEngine_v70he *scumm);
@@ -93,7 +93,7 @@ private:
 };
 #endif
 
-#if !defined(USE_WINEXE) || !defined(USE_MACEXE)
+#if !defined(USE_WINRES) || !defined(USE_MACRES)
 class NullResExtractor : public ResExtractor {
 public:
 	NullResExtractor(ScummEngine_v70he *scumm) : ResExtractor(scumm) {}

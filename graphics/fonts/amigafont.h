@@ -25,7 +25,7 @@
 
 #include "graphics/font.h"
 
-#ifdef USE_AMIGA_FONT
+#ifdef USE_AMIGARES
 
 namespace Graphics {
 

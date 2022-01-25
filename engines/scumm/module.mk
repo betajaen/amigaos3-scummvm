@@ -29,7 +29,6 @@ MODULE_OBJS := \
 	imuse/instrument.o \
 	imuse/sysex_samnmax.o \
 	imuse/sysex_scumm.o \
-	imuse/drivers/amiga.o \
 	imuse/drivers/fmtowns.o \
 	imuse/drivers/mac_m68k.o \
 	imuse/drivers/pcspk.o \
@@ -50,12 +49,9 @@ MODULE_OBJS := \
 	players/player_towns.o \
 	players/player_v1.o \
 	players/player_v2.o \
-	players/player_v2a.o \
 	players/player_v2base.o \
 	players/player_v2cms.o \
-	players/player_v3a.o \
 	players/player_v3m.o \
-	players/player_v4a.o \
 	players/player_v5m.o \
 	resource_v2.o \
 	resource_v3.o \
@@ -166,6 +162,14 @@ endif
 ifdef USE_SCUMM_FILE_NES
 MODULES_OBJS += \
 	file_nes.o
+endif
+
+ifdef USE_AMIGARES
+MODULES_OBJS += \
+	imuse/drivers/amiga.o \
+	players/player_v2a.o \
+	players/player_v3a.o \
+	players/player_v4a.o
 endif
 
 # This module can be built as a plugin
