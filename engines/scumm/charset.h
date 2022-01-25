@@ -275,6 +275,7 @@ public:
 	int getCharWidth(uint16 chr) override { return 8; }
 };
 
+#ifdef USE_MACEXE
 class CharsetRendererMac : public CharsetRendererCommon {
 protected:
 	Graphics::MacFONTFont _macFonts[2];
@@ -306,6 +307,7 @@ public:
 	void drawChar(int chr, Graphics::Surface &s, int x, int y) override;
 	void setColor(byte color) override;
 };
+#endif
 
 #ifdef ENABLE_SCUMM_7_8
 class CharsetRendererNut : public CharsetRenderer {

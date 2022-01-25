@@ -1502,6 +1502,7 @@ void CharsetRendererPCE::setDrawCharIntern(uint16 chr) {
 }
 #endif
 
+#ifdef USE_MACEXE
 CharsetRendererMac::CharsetRendererMac(ScummEngine *vm, const Common::String &fontFile, bool correctFontSpacing)
 	 : CharsetRendererCommon(vm) {
 
@@ -1956,6 +1957,7 @@ void CharsetRendererMac::setColor(byte color) {
 	_shadowColor = 255;
 	_color &= 0x0F;
 }
+#endif
 
 #ifdef ENABLE_SCUMM_7_8
 CharsetRendererNut::CharsetRendererNut(ScummEngine *vm)

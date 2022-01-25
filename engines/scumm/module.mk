@@ -15,7 +15,6 @@ MODULE_OBJS := \
 	debugger.o \
 	dialogs.o \
 	file.o \
-	file_nes.o \
 	gfx_mac.o \
 	gfx_towns.o \
 	gfx.o \
@@ -164,6 +163,11 @@ MODULE_OBJS += \
 endif
 endif
 
+ifdef USE_SCUMM_FILE_NES
+MODULES_OBJS += \
+	file_nes.o
+endif
+
 # This module can be built as a plugin
 ifeq ($(ENABLE_SCUMM), DYNAMIC_PLUGIN)
 PLUGIN := 1
@@ -179,5 +183,10 @@ DETECT_OBJS += $(MODULE)/detection.o
 # module is enabled, because it already has the contents.
 ifneq ($(ENABLE_SCUMM), STATIC_PLUGIN)
 DETECT_OBJS += $(MODULE)/file.o
-DETECT_OBJS += $(MODULE)/file_nes.o
+
+ifdef USE_SCUMM_FILE_NES
+DETECT_OBJS += \
+	file_nes.o
+endif
+
 endif

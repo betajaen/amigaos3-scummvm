@@ -1197,6 +1197,7 @@ Common::Error ScummEngine::init() {
 	if (_filenamePattern.genMethod == kGenUnchanged) {
 
 		if (_game.platform == Common::kPlatformNES) {
+#ifdef USE_SCUMM_FILE_NES
 			// We read data directly from NES ROM instead of extracting it with
 			// external tool
 			assert(_game.id == GID_MANIAC);
@@ -1205,6 +1206,10 @@ Common::Error ScummEngine::init() {
 
 			_filenamePattern.pattern = "%.2d.LFL";
 			_filenamePattern.genMethod = kGenRoomNum;
+#else
+			error("Not compiled with kPlatformNES support");
+			return Common::kNoGameDataFoundError;
+#endif
 		} else if (_game.platform == Common::kPlatformApple2GS) {
 			// Read data from Apple II disk images.
 			const char *tmpBuf1, *tmpBuf2;
@@ -1507,6 +1512,10 @@ void ScummEngine::setupScumm(const Common::String &macResourceFile) {
 	Common::String macFontFile;
 
 	if (_game.platform == Common::kPlatformMacintosh) {
+#ifndef USE_MACEXE
+		error("SCUMM Engine was not built with Mac Executable suport (USE_MACEXE)");
+		return;
+#else
 		if (_game.id == GID_INDY3) {
 			macFontFile = macResourceFile;
 		} if (_game.id == GID_LOOM) {
@@ -1516,6 +1525,7 @@ void ScummEngine::setupScumm(const Common::String &macResourceFile) {
 		} else if (_game.id == GID_MONKEY) {
 			macInstrumentFile = macResourceFile;
 		}
+#endif
 	}
 
 	// On some systems it's not safe to run CD audio games from the CD.
@@ -1670,8 +1680,13 @@ void ScummEngine::setupCharsetRenderer(const Common::String &macFontFile) {
 		if (_game.platform == Common::kPlatformFMTowns)
 			_charset = new CharsetRendererTownsV3(this);
 		else if (_game.platform == Common::kPlatformMacintosh && !macFontFile.empty()) {
+#ifdef USE_MACEXE
 			bool correctFontSpacing = _game.id == GID_LOOM || ConfMan.getBool("mac_v3_correct_font_spacing");
 			_charset = new CharsetRendererMac(this, macFontFile, correctFontSpacing);
+#else
+			_charset = NULL;
+			error("Cannot create CharsetRendererMac due to missing USE_MACEXE not being defined!");
+#endif
 		} else
 			_charset = new CharsetRendererV3(this);
 #ifdef ENABLE_SCUMM_7_8

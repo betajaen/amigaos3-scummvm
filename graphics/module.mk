@@ -5,10 +5,8 @@ MODULE_OBJS := \
 	cursorman.o \
 	font.o \
 	fontman.o \
-	fonts/amigafont.o \
 	fonts/bdf.o \
 	fonts/consolefont.o \
-	fonts/macfont.o \
 	fonts/newfont_big.o \
 	fonts/newfont.o \
 	fonts/ttf.o \
@@ -139,7 +137,13 @@ MODULE_OBJS += \
 	macgui/macwindow.o \
 	macgui/macwindowborder.o \
 	macgui/macwindowmanager.o \
+	fonts/macfont.o \
 	nine_patch.o
+endif
+
+ifdef USE_AMIGA_FONT
+MODULE_OBJS += \
+	fonts/amigafont.o
 endif
 
 # Include common rules

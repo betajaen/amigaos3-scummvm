@@ -25,6 +25,8 @@
 
 #include "graphics/font.h"
 
+#ifdef USE_AMIGA_FONT
+
 namespace Graphics {
 
 class AmigaFont : public Font {
@@ -92,4 +94,5 @@ public:
 
 } // End of namespace Graphics
 
+#endif // Robin
 #endif

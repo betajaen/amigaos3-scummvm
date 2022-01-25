@@ -286,6 +286,9 @@ _amigaos3_use_winexe=yes		# Support for Windows executable reading, disables win
 _amigaos3_use_wma=yes			# Support for WMA
 _amigaos3_use_xml=yes			# Support for XML
 _amigaos3_use_3do=yes			# Support for 3DO audio
+_amigaos3_use_amiga_font=yes	# Support for Amiga Fonts
+_amigaos3_use_scumm_file_nes=yes # Support for SCUMM File NES
+
 
 # Add (virtual) features
 add_feature 16bit "16bit color" "_16bit"
@@ -805,6 +808,7 @@ amigaos3_disable_feature() {
 	case $1 in
 		"min")
 			_amigaos3_use_achievements=no
+			_amigaos3_use_amiga_font=no
 			_amigaos3_use_asf=no
 			_amigaos3_use_arj=no
 			_amigaos3_use_launcher=no
@@ -819,9 +823,13 @@ amigaos3_disable_feature() {
 			_amigaos3_use_xml=yes
 			_amigaos3_use_3do=no
 			_amigaos3_use_svq1=no
+			_amigaos3_use_scumm_file_nes=no
 		;;
 		"achievements")
 			_amigaos3_use_achievements=no
+		;;
+		"amiga_font")
+			_amigaos3_use_amiga_font=no
 		;;
 		"asf")
 			_amigaos3_use_asf=no
@@ -864,6 +872,9 @@ amigaos3_disable_feature() {
 		;;
 		"3do")
 			_amigaos3_use_3do=no
+		;;
+		"scummfilenes")
+			_amigaos3_use_scumm_file_nes=no
 		;;
 	esac
 }
@@ -3974,6 +3985,7 @@ case $_backend in
 		;;
 	amigaos3)
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_achievements" "USE_ACHIEVEMENTS" "Achievements"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_amiga_font" "USE_AMIGA_FONT" "Amiga Font"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_arj" "USE_UNARJ" "ARJ"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_asf" "USE_ASF" "ASF"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_gui" "USE_GUI" "GUI"
@@ -3988,6 +4000,7 @@ case $_backend in
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_wma" "USE_WMA" "WMA"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_xml" "USE_XML" "XML"
 			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_3do" "USE_3DO" "3DO Audio Files"
+			amigaos3_define_in_config_if_yes_and_print "$_amigaos3_use_scumm_file_nes" "USE_SCUMM_FILE_NES" "SCUMM NES File"
 
 			if test "$_amigaos3_use_launcher" = "no"; then
 				append_var DEFINES "-DDISABLE_GUI_BUILTIN_THEME"

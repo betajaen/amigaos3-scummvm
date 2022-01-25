@@ -129,7 +129,11 @@ static BaseScummFile *openDiskImage(const Common::FSNode &node, const GameFilena
 	SearchMan.addDirectory("tmpDiskImgDir", node.getParent());
 
 	if (disk1.hasSuffix(".prg")) { // NES
+#ifdef USE_SCUMM_FILE_NES // Robin
 		diskImg = new ScummNESFile();
+#else
+		return NULL;
+#endif
 	} else { // C64 or Apple //gs
 		// setup necessary game settings for disk image reader
 		GameSettings gs;

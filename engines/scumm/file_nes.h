@@ -25,6 +25,8 @@
 
 #include "scumm/file.h"
 
+#ifdef USE_SCUMM_FILE_NES
+
 namespace Scumm {
 
 class ScummNESFile : public BaseScummFile {
@@ -92,4 +94,5 @@ public:
 
 } // End of namespace Scumm
 
+#endif
 #endif
