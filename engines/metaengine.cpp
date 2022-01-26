@@ -131,6 +131,7 @@ Common::KeymapArray MetaEngine::initKeymaps(const char *target) const {
 }
 
 const Common::AchievementsInfo MetaEngine::getAchievementsInfo(const Common::String &target) const {
+	#if USE_ACHIEVEMENTS
 	const Common::AchievementDescriptionList* achievementDescriptionList = getAchievementDescriptionList();
 	if (achievementDescriptionList == nullptr) {
 		return Common::AchievementsInfo();
@@ -156,6 +157,9 @@ const Common::AchievementsInfo MetaEngine::getAchievementsInfo(const Common::Str
 		}
 	}
 	return result;
+	#else
+		return Common::AchievementsInfo();
+	#endif
 }
 
 bool MetaEngine::hasFeature(MetaEngineFeature f) const {

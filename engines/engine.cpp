@@ -228,6 +228,9 @@ void initCommonGFX() {
 	}
 }
 
+// Disable due to reduced executable size
+#ifndef USE_LESS_EMBEDDED_RESOURCES
+
 // Please leave the splash screen in working order for your releases, even if they're commercial.
 // This is a proper and good way to show your appreciation for our hard work over these years.
 bool splash = false;
@@ -307,6 +310,7 @@ void splashScreen() {
 
 	splash = true;
 }
+#endif
 
 void initGraphicsModes(const Graphics::ModeList &modes) {
 	g_system->initSizeHint(modes);
@@ -330,8 +334,13 @@ void initGraphics(int width, int height, const Graphics::PixelFormat *format) {
 
 	OSystem::TransactionError gfxError = g_system->endGFXTransaction();
 
+	// Robin
+	// The image is included in the program which increases the executable size.
+	// This should be eventually replaced by loading the image from disk.
+#ifndef USE_LESS_EMBEDDED_RESOURCES
 	if (!splash && !GUI::GuiManager::instance()._launched)
 		splashScreen();
+#endif
 
 	if (gfxError == OSystem::kTransactionSuccess)
 		return;
