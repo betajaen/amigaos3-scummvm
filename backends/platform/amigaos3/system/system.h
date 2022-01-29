@@ -20,7 +20,13 @@
  *
  */
 
-#ifndef AMIGAOS3_AGA_H
-#define AMIGAOS3_AGA_H
+#ifndef AMIGAOS3_SYSTEM_H
+#define AMIGAOS3_SYSTEM_H
+
+#include "common/system.h"
+
+extern bool createAmigaOS3System(void *tooltypes, int argcWb, char const *argvWb[]);
+
+extern void destroyAmigaOS3System();
 
 #endif

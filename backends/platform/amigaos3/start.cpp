@@ -39,9 +39,7 @@
 #include "common/config-manager.h"
 
 struct CxBase *CxBase = NULL;
-#if defined(AMIGAOS3_RTG)
 struct Library *CyberGfxBase = NULL;
-#endif
 struct GfxBase *GfxBase = NULL;
 struct Library *IconBase = NULL;
 struct IntuitionBase *IntuitionBase = NULL;
@@ -54,12 +52,10 @@ static void unload_libraries(void) {
 		CxBase = NULL;
 	}
 
-#if defined(AMIGAOS3_RTG)
 	if (CyberGfxBase != NULL) {
 		CloseLibrary((struct Library *)CyberGfxBase);
 		CyberGfxBase = NULL;
 	}
-#endif
 
 	if (GfxBase != NULL) {
 		CloseLibrary((struct Library *)GfxBase);
@@ -98,12 +94,6 @@ static void load_libraries(void) {
 		exit(EXIT_FAILURE);
 	}
 
-#if defined(AMIGAOS3_RTG)
-	CyberGfxBase = (struct Library *)OpenLibrary("cybergraphics.library", 0);
-	if (CyberGfxBase == NULL) {
-		fprintf(stderr, "Unable to load cybergraphics.library, CGX not available.\n");
-	}
-#endif
 	GfxBase = (struct GfxBase *)OpenLibrary("graphics.library", 0);
 	if (GfxBase == NULL) {
 		fprintf(stderr, "Unable to load graphics.library!\n");
@@ -138,15 +128,22 @@ static void load_libraries(void) {
 extern bool default_timer;
 
 extern "C" int scummvm_main(int argc, const char *const argv[]);
+extern class AmigaOS3System *g_AmigaOS3System;
+extern bool createAmigaOS3System(void *tooltypes, int argcWb, char const *argvWb[]);
+extern void destroyAmigaOS3System();
+
 
 __stdargs int main(int argcWb, char const *argvWb[])
 {
+	int res = 0;
 	load_libraries();
-	CloseWorkBench();
 
-	scummvm_main(0, NULL);
+	if (createAmigaOS3System(NULL, argcWb, argvWb)) {
+		res = scummvm_main(0, NULL);
+		destroyAmigaOS3System();
+	}
 
-	OpenWorkBench();
+	unload_libraries();
 
-	return 0;
+	return res;
 }

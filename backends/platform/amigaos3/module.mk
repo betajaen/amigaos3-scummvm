@@ -2,12 +2,12 @@ MODULE := backends/platform/amigaos3
 
 MODULE_OBJS := \
 	start.o\
-	system.o\
-	events.o\
-	aga.o\
-	rtg.o\
-	gui.o\
-	timer.o
+	system/system.o\
+	system/events.o\
+	system/mutex.o\
+	system/timing.o\
+	system/graphics/native.o\
+	system/graphics/rtg.o\
 
 ifndef USE_MAIN
 	MODULE_OBJS += main.o

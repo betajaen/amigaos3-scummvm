@@ -264,8 +264,7 @@ _has_posix_spawn=no
 _endian=unknown
 _need_memalign=yes
 _have_x86=no
-# AmigaOS3 features
-_amigaos3_arch="aga"
+# AmigaOS3 featuresarc
 _amigaos3_processor="030"
 _amigaos3_user_machine_flags=""
 _amigaos3_user_define=""
@@ -976,8 +975,6 @@ Special configuration feature:
 
   --amigaos3-processor=OPTION              AmigaOS3 Processor
                                               030, 040, 060
-  --amigaos3-arch=OPTION                   AmigaOS3 Architecture
-                                              aga, rtg
   --amigaos3-machine-flags=OPTION          AmigaOS3 extra machine flags
   --amigaos3-define=OPTION                 AmigaOS3 extra define
   --amigaos3-disable-features=OPTIONS      AmigaOS3 disable features (Comma seperated):
@@ -1645,9 +1642,6 @@ for ac_option in $@; do
 			engine_disable ${engine_name}
 		done
 		;;
-	--amigaos3-arch=*)
-		_amigaos3_arch=`echo $ac_option | cut -d '=' -f 2`
-		;;
 	--amigaos3-processor=*)
 		_amigaos3_processor=`echo $ac_option | cut -d '=' -f 2`
 		;;
@@ -1710,24 +1704,6 @@ amigaos3)
 		*)
 			echo "unknown!"
 			echo "  Please set --amigaos3-processor to 030, 040 or 060"
-			exit 1
-		;;
-	esac
-
-	
-	echo_n "Checking Amiga architecture... "
-	case $_amigaos3_arch in
-		"aga")
-			_amigaos3_arch_define="AMIGAOS3_AGA"
-			echo "aga"
-		;;
-		"rtg")
-			_amigaos3_arch_define="AMIGAOS3_RTG"
-			echo "rtg"
-		;;
-		*)
-			echo "unknown!"
-			echo "  Please set --amigaos3-arch to aga or rtg"
 			exit 1
 		;;
 	esac
@@ -3445,8 +3421,6 @@ if test -n "$_host"; then
 				DEFINES="$DEFINES -D$_amigaos3_user_define"
 			fi
 
-			DEFINES="$DEFINES -D$_amigaos3_arch_define"
-
 			# Compiler Configuration
 
 			append_var CXXFLAGS "$_machine_flags"
@@ -3510,22 +3484,13 @@ if test -n "$_host"; then
 			_freetype2=no
 			_bink=no
 			
-
 			# Experimental
 			_translation=no
 			_detectlang=no
 
-			# Enable High resolution for RTG and disable for AGA
-			case $_amigaos3_arch in
-				"aga")
-					_highres=no
-					_16bit=no
-				;;
-				"rtg")
-					_highres=no
-					_16bit=no
-				;;
-			esac
+			# Enable High resolution for RTG and (maybe) AGA, but no 16-bit colour.
+			_highres=yes
+			_16bit=no
 			
 			# Leave out resources by default, save binary size.
 			_builtin_resources=no
@@ -3533,7 +3498,6 @@ if test -n "$_host"; then
 			# No detection. This is done manually via the installer
 			_detection_features_static=no
 			_detection_features_full=no
-
 			;;
 		android-arm-v7a | android-arm64-v8a | android-x86 | android-x86_64 | ouya)
 			# also __ANDROID__ is defined by Clang in the NDK

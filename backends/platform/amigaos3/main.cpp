@@ -22,18 +22,11 @@
 
 #include "common/config-manager.h"
 #include "common/system.h"
-
+#include "system/system.h"
 
 extern "C" int scummvm_main(int argc, const char *const argv[]) {
-	Common::String specialDebug;
-	Common::String command;
-
-	// Verify that the backend has been initialized (i.e. g_system has been set).
-	assert(g_system);
-	OSystem &system = *g_system;
 
 
-	// Robin TODO
 
 	return 0;
 }

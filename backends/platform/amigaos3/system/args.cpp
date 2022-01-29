@@ -20,4 +20,13 @@
  *
  */
 
-#include "events.h"
+#include "args.h"
+#include "graphics/native.h"
+#include "graphics/rtg.h"
+#include "system.h"
+
+AmigaOS3Args g_AmigaOS3Args;
+
+void AmigaOS3Args::parse(void *tooltypes, int argcWb, char const *argvWb[]) {
+	graphicsArch = Native;
+}

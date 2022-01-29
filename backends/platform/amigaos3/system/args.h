@@ -20,4 +20,26 @@
  *
  */
 
-#include "aga.h"
+#ifndef AMIGAOS3_ARGS_H
+#define AMIGAOS3_ARGS_H
+
+#include "common/system.h"
+
+class AmigaOS3Args {
+public:
+
+	enum GraphicsArch {
+		Native,
+		RTG
+	};
+
+	GraphicsArch graphicsArch;
+
+	void parse(void *tooltypes, int argcWb, char const *argvWb[]) {
+		graphicsArch = Native;
+	}
+};
+
+extern AmigaOS3Args g_AmigaOS3Args;
+
+#endif
