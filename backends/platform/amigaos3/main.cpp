@@ -23,9 +23,9 @@
 #include "common/config-manager.h"
 #include "common/system.h"
 #include "system/system.h"
+#include "args.h"
 
-extern "C" int scummvm_main(int argc, const char *const argv[]) {
-
+int scummvm_main_args() {
 
 
 	return 0;

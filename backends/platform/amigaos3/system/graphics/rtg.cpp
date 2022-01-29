@@ -27,6 +27,8 @@
 #include <proto/graphics.h>
 #include <proto/intuition.h>
 
+#include "../../args.h"
+
 extern Library *CyberGfxBase;
 
 AmigaOS3RTGGraphics::AmigaOS3RTGGraphics() {
@@ -35,14 +37,23 @@ AmigaOS3RTGGraphics::AmigaOS3RTGGraphics() {
 AmigaOS3RTGGraphics::~AmigaOS3RTGGraphics() {
 }
 
-void AmigaOS3RTGGraphics::init() {
-	// CyberGfxBase = (struct Library *)OpenLibrary("cybergraphics.library", 0);
-	// if (CyberGfxBase == NULL) {
-	// 	fprintf(stderr, "Unable to load cybergraphics.library, CGX not available.\n");
-	// }
+bool AmigaOS3RTGGraphics::init() {
+
+	CyberGfxBase = (struct Library *)OpenLibrary("cybergraphics.library", 0);
+	if (CyberGfxBase == NULL) {
+		// fprintf(stderr, "Unable to load cybergraphics.library, CGX not available.\n");
+		return false;
+	}
+
+	if (g_AmigaOS3Args.isWorkbenchClosed) {
+		g_AmigaOS3Args.isWorkbenchClosed = CloseWorkBench();
+	}
 }
 
 void AmigaOS3RTGGraphics::shutdown() {
+	if (g_AmigaOS3Args.isWorkbenchClosed) {
+		OpenWorkBench();
+	}
 }
 
 int AmigaOS3RTGGraphics::hasFeature(OSystem::Feature f) {

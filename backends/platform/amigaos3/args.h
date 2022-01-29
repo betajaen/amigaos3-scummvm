@@ -20,13 +20,33 @@
  *
  */
 
-#include "args.h"
-#include "graphics/native.h"
-#include "graphics/rtg.h"
-#include "system.h"
+#ifndef AMIGAOS3_ARGS_H
+#define AMIGAOS3_ARGS_H
 
-AmigaOS3Args g_AmigaOS3Args;
+#include "common/system.h"
 
-void AmigaOS3Args::parse(void *tooltypes, int argcWb, char const *argvWb[]) {
-	graphicsArch = Native;
-}
+class AmigaOS3Args {
+public:
+
+	enum GraphicsArch {
+		Native,
+		RTG
+	};
+
+	GraphicsArch graphicsArch;
+	bool isWorkbenchWindow;
+	bool isWorkbenchClosed;
+	uint16 width, height;
+	Common::String gameEngine;
+	Common::String gameId;
+
+	AmigaOS3Args();
+	~AmigaOS3Args();
+
+	bool parse(int argcWb, char const *argvWb[]);
+
+};
+
+extern AmigaOS3Args g_AmigaOS3Args;
+
+#endif

@@ -20,12 +20,13 @@
  *
  */
 
-#include "native.h"
-
 #include <proto/dos.h>
 #include <proto/exec.h>
 #include <proto/graphics.h>
 #include <proto/intuition.h>
+
+#include "native.h"
+#include "../../args.h"
 
 AmigaOS3NativeGraphics::AmigaOS3NativeGraphics() {
 }
@@ -33,14 +34,21 @@ AmigaOS3NativeGraphics::AmigaOS3NativeGraphics() {
 AmigaOS3NativeGraphics::~AmigaOS3NativeGraphics() {
 }
 
-void AmigaOS3NativeGraphics::init() {
+bool AmigaOS3NativeGraphics::init() {
+
+	if (g_AmigaOS3Args.isWorkbenchClosed) {
+		g_AmigaOS3Args.isWorkbenchClosed = CloseWorkBench();
+	}
+
 }
 
 void AmigaOS3NativeGraphics::shutdown() {
+	if (g_AmigaOS3Args.isWorkbenchClosed) {
+		OpenWorkBench();
+	}
 }
 
 int AmigaOS3NativeGraphics::hasFeature(OSystem::Feature f) {
-	
 	return -1;
 }
 

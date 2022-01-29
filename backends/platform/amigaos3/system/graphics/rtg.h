@@ -31,7 +31,7 @@ public:
 	AmigaOS3RTGGraphics();
 	~AmigaOS3RTGGraphics();
 
-	void init();
+	bool init();
 
 	void shutdown();
 

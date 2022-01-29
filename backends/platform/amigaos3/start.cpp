@@ -38,6 +38,11 @@
 
 #include "common/config-manager.h"
 
+#include "system/system.h"
+#include "args.h"
+
+#define MINIMUM_STACK_SIZE 100000
+
 struct CxBase *CxBase = NULL;
 struct Library *CyberGfxBase = NULL;
 struct GfxBase *GfxBase = NULL;
@@ -52,6 +57,7 @@ static void unload_libraries(void) {
 		CxBase = NULL;
 	}
 
+	// Used in graphics/rtg.cpp when using RTG graphics.
 	if (CyberGfxBase != NULL) {
 		CloseLibrary((struct Library *)CyberGfxBase);
 		CyberGfxBase = NULL;
@@ -82,7 +88,6 @@ static void unload_libraries(void) {
 		RealTimeBase = NULL;
 	}
 
-	////////////// TaskLocalTimer::destroyInstance();
 }
 
 static void load_libraries(void) {
@@ -127,20 +132,29 @@ static void load_libraries(void) {
 
 extern bool default_timer;
 
-extern "C" int scummvm_main(int argc, const char *const argv[]);
-extern class AmigaOS3System *g_AmigaOS3System;
-extern bool createAmigaOS3System(void *tooltypes, int argcWb, char const *argvWb[]);
-extern void destroyAmigaOS3System();
-
+extern "C" int scummvm_main_args();
 
 __stdargs int main(int argcWb, char const *argvWb[])
 {
 	int res = 0;
+	struct Task *task;
+	ptrdiff_t stackSize;
 	load_libraries();
 
-	if (createAmigaOS3System(NULL, argcWb, argvWb)) {
-		res = scummvm_main(0, NULL);
-		destroyAmigaOS3System();
+	task = FindTask(NULL);
+	stackSize = (uint8 *)task->tc_SPUpper - (uint8 *)task->tc_SPLower;
+
+	if (stackSize < MINIMUM_STACK_SIZE) {
+		printf("Stack size is too small\n");
+		unload_libraries();
+		return EXIT_FAILURE;
+	}
+
+	if (g_AmigaOS3Args.parse(argcWb, argvWb)) {
+		if (createAmigaOS3System()) {
+			res = scummvm_main_args();
+			destroyAmigaOS3System();
+		}
 	}
 
 	unload_libraries();

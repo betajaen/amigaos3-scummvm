@@ -23,7 +23,7 @@
 #include "system.h"
 #include "graphics/native.h"
 #include "graphics/rtg.h"
-#include "args.h"
+#include "../args.h"
 
 AmigaOS3Args g_AmigaOS3Args;
 
@@ -65,6 +65,9 @@ public:
 		}
 
 		switch (f) {
+			OSystem::Feature::kFeatureSystemBrowserDialog : {
+				return true;
+			}
 			default:
 				return false;
 		}
@@ -133,7 +136,7 @@ public:
 	}
 
 	virtual void copyRectToScreen(const void *buf, int pitch, int x, int y, int w, int h) override {
-		return _graphics.copyRectToScreen(buf, pitch, x, y, w, h);
+		_graphics.copyRectToScreen(buf, pitch, x, y, w, h);
 	}
 
 	virtual Graphics::Surface *lockScreen() override {
@@ -291,10 +294,8 @@ void parseArguments(AmigaOS3Args& args, void *tooltypes, int argcWb, char const 
 	// TODO
 }
 
-bool createAmigaOS3System(void *tooltypes, int argcWb, char const *argvWb[]) {
+bool createAmigaOS3System() {
 	assert(g_system);
-
-	g_AmigaOS3Args.parse(tooltypes, argcWb, argvWb);
 
 	switch (g_AmigaOS3Args.graphicsArch) {
 		case AmigaOS3Args::RTG:

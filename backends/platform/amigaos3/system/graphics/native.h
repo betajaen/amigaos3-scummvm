@@ -25,6 +25,8 @@
 
 #include "common/system.h"
 
+#include <proto/graphics.h>
+
 class AmigaOS3NativeGraphics {
 
 public:
@@ -32,7 +34,7 @@ public:
 	AmigaOS3NativeGraphics();
 	~AmigaOS3NativeGraphics();
 
-	void init();
+	bool init();
 
 	void shutdown();
 
@@ -113,6 +115,10 @@ public:
 
 protected:
 
+	struct Screen * _screen;
+	struct Window *_window;
+	struct ScreenBuffer *_screenBuffer[2];
+	struct RastPort _screenRastPort[2];
 };
 
 
